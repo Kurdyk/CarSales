@@ -1,8 +1,10 @@
-module com.example.project {
+module Applications.project {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.example.project to javafx.fxml;
-    exports com.example.project;
+    opens Applications.MainApp to javafx.fxml;
+    opens Applications.VehiclesApp to javafx.fxml;
+    exports Applications.Connexion;
+    opens Applications.Connexion to javafx.fxml;
 }

@@ -1,5 +1,6 @@
-package com.example.project;
+package Applications.Connexion;
 
+import Applications.MainApp.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,15 +22,24 @@ public class ConnexionController {
 
     @FXML
     protected void onConnexionButtonClick() {
-        String test = idField.getText();
-        System.out.println(test);
-        if (test.equals("Test")) {
+        String id = idField.getText();
+        String password = passwordField.getText();
+        System.out.println(id + password);
+        if (id.equals("Test")) {
             System.out.println("reject");
             try {
                 rejectConnexion();
+                return;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        MainApp mainApp = new MainApp();
+        Stage stage = new Stage();
+        try {
+            mainApp.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
