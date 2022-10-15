@@ -1,5 +1,6 @@
 package Applications.MainApp;
 
+import Applications.ClientApp.ClientApp;
 import Applications.VehiclesApp.VehiclesApp;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -34,6 +35,13 @@ public class MainAppController {
     @FXML
     private void onClientsClicked() {
         System.out.println("Client click");
+        ClientApp clientApp = new ClientApp();
+        Stage stage = new Stage();
+        try {
+            clientApp.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
