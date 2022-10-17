@@ -1,12 +1,13 @@
 package Applications.VehiclesApp;
 
-import Content.Car;
-import Content.Scooter;
-import Content.Vehicle;
+import Content.Vehicles.Car;
+import Content.Vehicles.Scooter;
+import Content.Vehicles.Vehicle;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 
+import java.util.Date;
 import java.util.Random;
 
 public class VehiclesController {
@@ -29,8 +30,8 @@ public class VehiclesController {
     @FXML
     private Text Model;
 
-    public VehiclesController() {
-    }
+    @FXML
+    private Text date;
 
     @FXML
     private void onDetailButtonClick() {
@@ -45,6 +46,7 @@ public class VehiclesController {
         licencePlate.setText(current.getLicencePlate());
         value.setText(String.valueOf(current.getValue()));
         type.setText((current instanceof Car)? "Car" : "Scooter");
+        date.setText(current.getDate().toString());
     }
 
     @FXML
@@ -52,9 +54,9 @@ public class VehiclesController {
         System.out.println("New vehicle");
         Random r = new Random();
         if (r.nextBoolean()) {
-            vehicleListView.getItems().add(new Scooter("a", "b", r.nextInt(100)));
+            vehicleListView.getItems().add(new Scooter("a", "b", r.nextInt(100), new Date()));
         } else {
-            vehicleListView.getItems().add(new Car("A", "B", r.nextInt(100)));
+            vehicleListView.getItems().add(new Car("A", "B", r.nextInt(100), new Date()));
         }
     }
 

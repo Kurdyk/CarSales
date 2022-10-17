@@ -11,7 +11,7 @@
    <children>
       <HBox prefHeight="411.0" prefWidth="600.0">
          <children>
-            <ListView fx:id="vehicleListView" prefHeight="400.0" prefWidth="293.0" />
+            <ListView fx:id="vehicleListView" prefHeight="405.0" prefWidth="400.0" />
             <VBox prefHeight="398.0" prefWidth="440.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -44,11 +44,17 @@
                         <Text fx:id="Model" strokeType="OUTSIDE" strokeWidth="0.0" text="N/A" />
                      </children>
                   </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Label text="Date" />
+                        <Text fx:id="date" strokeType="OUTSIDE" strokeWidth="0.0" text="N/A" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="627.0" spacing="60.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="627.0" spacing="100.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onDetailButtonClick" text="Details" />
             <Button mnemonicParsing="false" text="Order" />
