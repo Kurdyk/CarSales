@@ -8,7 +8,7 @@ public class Scooter extends Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
+        return "Scooter {" +
                 "brand='" + this.brand + '\'' +
                 ", licencePlate='" + this.licencePlate + '\'' +
                 ", value=" + this.value +
