@@ -1,11 +1,14 @@
 package Applications.ClientApp;
 
+import Applications.OrderHistoryApp.OrderHistoryApp;
+import Applications.VehiclesApp.VehiclesApp;
 import Content.Clients.Client;
 import Content.Clients.Company;
 import Content.Clients.Particular;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.util.Random;
 
@@ -41,7 +44,14 @@ public class ClientController {
 
     @FXML
     private void onOrderHistoryClick() {
-        // todo: Make a new window to display the history
+        System.out.println("Order History click");
+        OrderHistoryApp orderHistoryApp = new OrderHistoryApp();
+        Stage stage = new Stage();
+        try {
+            orderHistoryApp.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
