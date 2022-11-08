@@ -39,7 +39,7 @@ public class Vehicle {
 
         if (idClass == 0) {
             try {
-                idClass = DBConnector.getInstance().getNextAvailableId();
+                idClass = DBConnector.getInstance().getNextAvailableVehicleId();
             } catch (SQLException e) {
                 // todo error screen
                 e.printStackTrace();

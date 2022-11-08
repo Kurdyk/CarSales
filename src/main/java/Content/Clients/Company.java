@@ -13,6 +13,10 @@ public class Company extends Client {
         return siret;
     }
 
+    public String toSQLFormat() {
+        return this.id + ", '" + this.name + "', '" + this.address + "', " + this.nbOrder + ", '" + this.siret + "'";
+    }
+
     @Override
     public String toString() {
         return "Company{" +

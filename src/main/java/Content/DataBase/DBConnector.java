@@ -38,36 +38,28 @@ public class DBConnector {
         return Objects.requireNonNullElseGet(instance, DBConnector::new);
     }
 
-    /**
-     * Mostly for test purpose
-     * @throws SQLException
-     */
-    public void read_table() throws SQLException {
-
-        String QUERY = "SELECT * from Cars";
-
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery(QUERY);
-        // Extract data from result set
-        while (rs.next()) {
-            // Retrieve by column name
-            System.out.println("ID: " + rs.getInt("id"));
-            System.out.println("licence = " + rs.getString("licence_plate"));
-            System.out.println("price = " + rs.getDouble("price"));
-        }
-    }
 
     /// SELECT METHODS
-    public long getNextAvailableId() throws SQLException {
+    public long getNextAvailableVehicleId() throws SQLException {
         String queryCars = "SELECT MAX(id) FROM Cars;";
         String queryScooter = "SELECT MAX(id) FROM Scooters;";
+        return queryId(queryCars, queryScooter);
+    }
+
+    public long getNextAvailableClientId() throws SQLException {
+        String queryParticular = "SELECT MAX(id) FROM Particular;";
+        String queryCompany = "SELECT MAX(id) FROM Company;";
+        return queryId(queryParticular, queryCompany);
+    }
+
+    private long queryId(String table1, String table2) throws SQLException {
         long result = 0;
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(queryCars);
+        ResultSet resultSet = statement.executeQuery(table1);
         if (!resultSet.next()) {
             result = resultSet.getLong("id");
         }
-        resultSet = statement.executeQuery(queryScooter);
+        resultSet = statement.executeQuery(table2);
         if (!resultSet.next()) {
             result = resultSet.getLong("id");
         }
@@ -85,23 +77,28 @@ public class DBConnector {
     }
 
     private void addCompany(Company company) throws SQLException {
-        String query = "INSERT INTO Company (id, Name, Address, nbOrder, Siret) VALUE ";
+        String query = "INSERT INTO Company (id, Name, Address, nbOrder, Siret) VALUE (" + company.toSQLFormat() + ");";
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(query);
+    }
+
+    private void addParticular(Particular particular) throws SQLException {
+        String query = "INSERT INTO Particular (id, Name, Address, nbOrder) VALUE (" + particular.toSQLFormat() + ");";
+        System.out.println(query);
         Statement statement = connection.createStatement();
         statement.executeUpdate(query);
     }
 
     public void addClient(Client client) throws SQLException {
+        if (client instanceof Particular) {
+            this.addParticular((Particular) client);
+        } else { // Company
+            this.addCompany((Company) client);
+        }
     }
 
     /// DELETE METHODS
-    public void deleteVehicle(Vehicle vehicle) throws SQLException {
-        String tableName = (vehicle instanceof Car)? "Cars" : "Scooters";
-        String query = "DELETE FROM " + tableName + " WHERE id = " + vehicle.getId();
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(query);
-    }
-
-    public void deleteVehicle(long id, String tableName) throws SQLException {
+    public void deleteFromTableViaId(long id, String tableName) throws SQLException {
         String query = "DELETE FROM " + tableName + " WHERE id = " + id + ";";
         Statement statement = connection.createStatement();
         statement.executeUpdate(query);
@@ -112,6 +109,12 @@ public class DBConnector {
         Statement statement = connection.createStatement();
         statement.executeUpdate(query);
         query = "DELETE FROM Scooters;";
+        statement = connection.createStatement();
+        statement.executeUpdate(query);
+        query = "DELETE FROM Particular;";
+        statement = connection.createStatement();
+        statement.executeUpdate(query);
+        query = "DELETE FROM Company;";
         statement = connection.createStatement();
         statement.executeUpdate(query);
     }

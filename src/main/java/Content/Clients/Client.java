@@ -19,7 +19,7 @@ public class Client {
         this.nbOrder = 0;
         if (idClass == 0) {
             try {
-               idClass = DBConnector.instance.getNextAvailableId();
+               idClass = DBConnector.getInstance().getNextAvailableClientId();
             } catch (SQLException e) {
                 // todo error screen
                 e.printStackTrace();

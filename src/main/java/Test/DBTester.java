@@ -1,9 +1,10 @@
 package Test;
 
+import Content.Clients.Company;
+import Content.Clients.Particular;
 import Content.DataBase.DBConnector;
 import Content.Vehicles.Car;
 import Content.Vehicles.Scooter;
-import Content.Vehicles.Vehicle;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -40,8 +41,27 @@ public class DBTester {
         }
 
         try {
-            dbConnector.deleteVehicle(1, "Cars");
+            dbConnector.deleteFromTableViaId(1, "Cars");
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Particular particular = new Particular("Jean Dupont", "Strasbourg");
+            dbConnector.addClient(particular);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            Company company = new Company("Jean Dupont", "Strasbourg", "21351321");
+            dbConnector.addClient(company);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            Particular particular = new Particular("Jean Dujardin", "Monaco");
+            dbConnector.addClient(particular);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

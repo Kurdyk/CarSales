@@ -7,6 +7,10 @@ public class Particular extends Client {
         super(name, address);
     }
 
+    public String toSQLFormat() {
+        return this.id + ", '" + this.name + "', '" + this.address + "', " + this.nbOrder;
+    }
+
     @Override
     public String toString() {
         return "Particular{" +
