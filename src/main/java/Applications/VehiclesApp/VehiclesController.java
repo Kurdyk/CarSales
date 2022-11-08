@@ -54,9 +54,23 @@ public class VehiclesController {
         System.out.println("New vehicle");
         Random r = new Random();
         if (r.nextBoolean()) {
-            vehicleListView.getItems().add(new Scooter("a", "b", r.nextInt(100), new Date()));
+            vehicleListView.getItems().add(
+                    new Scooter(
+                            "a",
+                            "b",
+                            r.nextInt(100),
+                            new Date(),
+                            "US",
+                            "Y"));
         } else {
-            vehicleListView.getItems().add(new Car("A", "B", r.nextInt(100), new Date()));
+            vehicleListView.getItems().add(
+                    new Car(
+                            "A",
+                            "B",
+                            r.nextInt(100),
+                            new Date(),
+                            "France",
+                            "X"));
         }
     }
 

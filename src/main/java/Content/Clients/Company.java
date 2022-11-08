@@ -9,17 +9,18 @@ public class Company extends Client {
         this.siret = siret;
     }
 
+    public String getSiret() {
+        return siret;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", nbOrder=" + nbOrder +
+                ", id=" + id +
                 ", siret='" + siret + '\'' +
                 '}';
-    }
-
-    public String getSiret() {
-        return siret;
     }
 }

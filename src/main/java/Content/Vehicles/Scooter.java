@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Scooter extends Vehicle {
 
-    public Scooter(String brand, String licencePlate, long value, Date date) {
-        super(brand, licencePlate, value, date);
+    public Scooter(String brand, String licencePlate, long value, Date date, String originCountry, String model) {
+        super(brand, licencePlate, value, date, originCountry, model);
     }
 
     @Override
@@ -15,6 +15,8 @@ public class Scooter extends Vehicle {
                 ", licencePlate='" + licencePlate + '\'' +
                 ", value=" + value +
                 ", date=" + date +
+                ", originCountry='" + originCountry + '\'' +
+                ", model='" + model + '\'' +
                 '}';
     }
 }

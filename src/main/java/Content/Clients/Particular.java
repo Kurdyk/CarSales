@@ -10,8 +10,10 @@ public class Particular extends Client {
     @Override
     public String toString() {
         return "Particular{" +
-                " name= " + this.getName() +
-                " address= " + this.getAddress() +
-                "}";
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", nbOrder=" + nbOrder +
+                ", id=" + id +
+                '}';
     }
 }
