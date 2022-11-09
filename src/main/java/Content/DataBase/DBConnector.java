@@ -5,6 +5,7 @@ import Content.Clients.Company;
 import Content.Clients.Particular;
 import Content.Vehicles.Car;
 import Content.Vehicles.Vehicle;
+import javafx.css.SizeUnits;
 
 import java.util.Objects;
 import java.sql.*;
@@ -71,7 +72,6 @@ public class DBConnector {
         String tableName = (vehicle instanceof Car)? "Cars" : "Scooters";
         String query = "INSERT INTO " + tableName + " (id, licence_plate, price, EntryDate, Brand, OriginCountry, Model, Sold) " +
                 "VALUE (" + vehicle.toSQLFormat() + ", FALSE) ;";
-        System.out.println(query);
         Statement statement = connection.createStatement();
         statement.executeUpdate(query);
     }

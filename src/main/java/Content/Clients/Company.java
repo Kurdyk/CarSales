@@ -19,12 +19,6 @@ public class Company extends Client {
 
     @Override
     public String toString() {
-        return "Company{" +
-                "name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", nbOrder=" + nbOrder +
-                ", id=" + id +
-                ", siret='" + siret + '\'' +
-                '}';
+        return "Company : " + this.name;
     }
 }

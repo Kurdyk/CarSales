@@ -8,15 +8,12 @@ public class Scooter extends Vehicle {
         super(brand, licencePlate, value, date, originCountry, model);
     }
 
+    public Scooter(String brand, String licencePlate, long value, Date date, String originCountry, String model, long id) {
+        super(brand, licencePlate, value, date, originCountry, model, id);
+    }
+
     @Override
     public String toString() {
-        return "Scooter{" +
-                "brand='" + brand + '\'' +
-                ", licencePlate='" + licencePlate + '\'' +
-                ", value=" + value +
-                ", date=" + date +
-                ", originCountry='" + originCountry + '\'' +
-                ", model='" + model + '\'' +
-                '}';
+        return "Scooter : " + this.brand + ", " + this.model;
     }
 }

@@ -13,11 +13,6 @@ public class Particular extends Client {
 
     @Override
     public String toString() {
-        return "Particular{" +
-                "name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", nbOrder=" + nbOrder +
-                ", id=" + id +
-                '}';
+        return "Particular : " + this.name;
     }
 }

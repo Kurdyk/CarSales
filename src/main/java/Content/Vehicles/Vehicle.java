@@ -17,18 +17,15 @@ public class Vehicle {
     protected final String model;
     protected final long id;
 
-    @Override
-    public String toString() {
-        return "Vehicle{" +
-                "brand='" + brand + '\'' +
-                ", licencePlate='" + licencePlate + '\'' +
-                ", value=" + value +
-                ", date=" + date +
-                ", originCountry='" + originCountry + '\'' +
-                ", model='" + model + '\'' +
-                '}';
-    }
-
+    /**
+     * A constructor made to create a vehicle and import it in the database
+     * @param brand the brand of the vehicle
+     * @param licencePlate the licence plate of the vehicle
+     * @param value the original value of the vehicle
+     * @param date the date when the vehicle is up for sale (used to devaluate it if needed)
+     * @param originCountry the country where the car is stored
+     * @param model the model of the vehicle
+     */
     public Vehicle(String brand, String licencePlate, long value, Date date, String originCountry, String model) {
         this.brand = brand;
         this.licencePlate = licencePlate;
@@ -46,6 +43,39 @@ public class Vehicle {
             }
         }
         this.id = idClass++;
+    }
+
+    /**
+     * A constructor made to create a Vehicle object from the database
+     * @param brand the brand of the vehicle
+     * @param licencePlate the licence plate of the vehicle
+     * @param value the original value of the vehicle
+     * @param date the date when the vehicle is up for sale (used to devaluate it if needed)
+     * @param originCountry the country where the car is stored
+     * @param model the model of the vehicle
+     * @param id the id in the database of the vehicle
+     */
+    public Vehicle(String brand, String licencePlate, long value, Date date, String originCountry, String model, long id) {
+        this.brand = brand;
+        this.licencePlate = licencePlate;
+        this.value = value;
+        this.date = date;
+        this.originCountry = originCountry;
+        this.model = model;
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "brand='" + brand + '\'' +
+                ", licencePlate='" + licencePlate + '\'' +
+                ", value=" + value +
+                ", date=" + date +
+                ", originCountry='" + originCountry + '\'' +
+                ", model='" + model + '\'' +
+                ", id=" + id +
+                '}';
     }
 
     public String toSQLFormat() {
