@@ -14,6 +14,6 @@ public class Car extends Vehicle {
 
     @Override
     public String toString() {
-        return "Car : " + this.brand + ", " + this.model;
+        return "Car : " + this.brand + ", model " + this.model;
     }
 }

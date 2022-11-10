@@ -4,9 +4,11 @@ import Content.Clients.Client;
 import Content.Clients.Company;
 import Content.Clients.Particular;
 import Content.Vehicles.Car;
+import Content.Vehicles.Scooter;
 import Content.Vehicles.Vehicle;
 import javafx.css.SizeUnits;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.sql.*;
 
@@ -41,6 +43,77 @@ public class DBConnector {
 
 
     /// SELECT METHODS
+    public ArrayList<Car> getAllCars() throws SQLException {
+        String query = "SELECT * FROM Cars;";
+        ArrayList<Car> result = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            Car currentCar = new Car(
+                resultSet.getString("Brand"),
+                resultSet.getString("licence_plate"),
+                resultSet.getLong("price"),
+                resultSet.getDate("EntryDate"),
+                resultSet.getString("OriginCountry"),
+                resultSet.getString("Model"),
+                resultSet.getLong("id"));
+            result.add(currentCar);
+        }
+        return result;
+    }
+
+    public ArrayList<Scooter> getAllScooters() throws SQLException {
+        String query = "SELECT * FROM Scooters;";
+        ArrayList<Scooter> result = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            Scooter currentScooter = new Scooter(
+                resultSet.getString("Brand"),
+                resultSet.getString("licence_plate"),
+                resultSet.getLong("price"),
+                resultSet.getDate("EntryDate"),
+                resultSet.getString("OriginCountry"),
+                resultSet.getString("Model"),
+                resultSet.getLong("id"));
+            result.add(currentScooter);
+        }
+        return result;
+    }
+
+    public ArrayList<Particular> getAllParticular() throws SQLException {
+        String query = "SELECT * FROM Particular;";
+        ArrayList<Particular> result = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            Particular currentParticular = new Particular(
+                resultSet.getString("Name"),
+                resultSet.getString("Address"),
+                resultSet.getInt("nbOrder"),
+                resultSet.getLong("id"));
+            result.add(currentParticular);
+        }
+        return result;
+    }
+
+    public ArrayList<Company> getAllCompany() throws SQLException {
+        String query = "SELECT * FROM Company;";
+        ArrayList<Company> result = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            Company currentCompany = new Company(
+                resultSet.getString("Name"),
+                resultSet.getString("Address"),
+                resultSet.getInt("nbOrder"),
+                resultSet.getLong("id"),
+                resultSet.getString("Siret"));
+            result.add(currentCompany);
+        }
+        return result;
+    }
+
     public long getNextAvailableVehicleId() throws SQLException {
         String queryCars = "SELECT MAX(id) FROM Cars;";
         String queryScooter = "SELECT MAX(id) FROM Scooters;";

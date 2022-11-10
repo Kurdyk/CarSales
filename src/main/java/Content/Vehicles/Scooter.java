@@ -14,6 +14,6 @@ public class Scooter extends Vehicle {
 
     @Override
     public String toString() {
-        return "Scooter : " + this.brand + ", " + this.model;
+        return "Scooter : " + this.brand + ", model " + this.model;
     }
 }

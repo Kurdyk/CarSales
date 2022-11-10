@@ -13,6 +13,13 @@ public class Client {
     protected final int nbOrder;
     protected final long id;
 
+    public Client(String name, String address, int nbOrder, long id) {
+        this.name = name;
+        this.address = address;
+        this.nbOrder = nbOrder;
+        this.id = id;
+    }
+
     public Client(String name, String address) {
         this.name = name;
         this.address = address;

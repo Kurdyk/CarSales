@@ -4,8 +4,10 @@ import Content.DataBase.DBConnector;
 import Content.Vehicles.Car;
 import Content.Vehicles.Scooter;
 import Content.Vehicles.Vehicle;
+import com.mysql.cj.util.DnsSrv;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
@@ -13,12 +15,14 @@ import javafx.stage.Stage;
 import javafx.util.converter.DateTimeStringConverter;
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class VehiclesController {
+public class VehiclesController implements Initializable {
 
     /// Main view
     @FXML
@@ -32,7 +36,7 @@ public class VehiclesController {
     @FXML
     private Text type;
     @FXML
-    private Text Model;
+    private Text model;
     @FXML
     private Text date;
 
@@ -61,7 +65,6 @@ public class VehiclesController {
     @FXML
     private final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
 
-
     @FXML
     private void onDetailButtonClick() {
         System.out.println("Detail");
@@ -74,6 +77,7 @@ public class VehiclesController {
         brand.setText(current.getBrand());
         licencePlate.setText(current.getLicencePlate());
         value.setText(String.valueOf(current.getValue()));
+        model.setText(current.getModel());
         type.setText((current instanceof Car)? "Car" : "Scooter");
         date.setText(current.getDate().toString());
     }
@@ -118,10 +122,39 @@ public class VehiclesController {
             e.printStackTrace();
         }
         this.confirmButton.getScene().getWindow().hide();
+        this.updateListView();
     }
 
     @FXML
     private void onCancelButtonClick() {
         this.cancelButton.getScene().getWindow().hide();
+    }
+
+    private void updateListView() {
+        System.out.println("update");
+        ArrayList<Car> allCars = null;
+        ArrayList<Scooter> allScooters = null;
+        try {
+            allCars = DBConnector.getInstance().getAllCars();
+            allScooters = DBConnector.getInstance().getAllScooters();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
+        System.out.println(allCars.size());
+        System.out.println(allScooters.size());
+        this.vehicleListView.getItems().removeAll();
+        for (Vehicle car : allCars) {
+            this.vehicleListView.getItems().add(car);
+        }
+        for (Vehicle scooter : allScooters) {
+            this.vehicleListView.getItems().add(scooter);
+        }
+        this.vehicleListView.refresh();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.updateListView();
     }
 }

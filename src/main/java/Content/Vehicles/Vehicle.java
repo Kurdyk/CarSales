@@ -106,6 +106,7 @@ public class Vehicle {
     }
 
     public String getModel() {
+        System.out.println("model = " + model);
         return model;
     }
 

@@ -41,7 +41,7 @@
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                      <children>
                         <Label text="Model" />
-                        <Text fx:id="Model" strokeType="OUTSIDE" strokeWidth="0.0" text="N/A" />
+                        <Text fx:id="model" strokeType="OUTSIDE" strokeWidth="0.0" text="N/A" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
