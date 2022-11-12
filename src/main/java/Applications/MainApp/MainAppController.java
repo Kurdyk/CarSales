@@ -36,6 +36,7 @@ public class MainAppController {
     @FXML
     private void onClientsClicked() {
         System.out.println("Client click");
+        this.clients.getScene().getWindow().hide();
         ClientApp clientApp = new ClientApp();
         Stage stage = new Stage();
         try {

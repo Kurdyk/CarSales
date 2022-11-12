@@ -27,9 +27,6 @@ import java.util.*;
 
 public class VehiclesController implements Initializable {
 
-    /// Jump between scene
-    private Scene scene;
-
     /// Main view
     @FXML
     private ListView<Vehicle> vehicleListView;
