@@ -1,13 +1,17 @@
 package Applications.VehiclesApp;
 
+import Applications.ErrorApp.ErrorApp;
+import Applications.MainApp.MainApp;
 import Content.DataBase.DBConnector;
 import Content.Vehicles.Car;
 import Content.Vehicles.Scooter;
 import Content.Vehicles.Vehicle;
-import com.mysql.cj.util.DnsSrv;
+import javafx.css.SizeUnits;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
@@ -16,13 +20,15 @@ import javafx.util.converter.DateTimeStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VehiclesController implements Initializable {
+
+    /// Jump between scene
+    private Scene scene;
 
     /// Main view
     @FXML
@@ -39,6 +45,10 @@ public class VehiclesController implements Initializable {
     private Text model;
     @FXML
     private Text date;
+    @FXML
+    private Button newVehicleButton;
+    @FXML
+    private Button returnButton;
 
     /// Creation View
     private final Stage creationScreen = new Stage();
@@ -85,8 +95,9 @@ public class VehiclesController implements Initializable {
     @FXML
     private void onAddVehicleButtonClick() throws IOException {
         System.out.println("New vehicle");
-        this.dateField.setTextFormatter(new TextFormatter<>(new DateTimeStringConverter(format)));
+        this.newVehicleButton.getScene().getWindow().hide();
         FXMLLoader fxmlLoader = new FXMLLoader(VehiclesApp.class.getResource("VehicleCreatorView.fxml"));
+        this.dateField.setTextFormatter(new TextFormatter<>(new DateTimeStringConverter(format)));
         Scene scene = new Scene(fxmlLoader.load(), 400, 200);
         creationScreen.setTitle("Creation screen");
         creationScreen.setScene(scene);
@@ -96,17 +107,26 @@ public class VehiclesController implements Initializable {
     @FXML
     private void onConfirmButtonClick() {
         System.out.println("Confirm");
-        String brand = this.brandField.getText();
-        String model = this.modelField.getText();
-        String originCountry = this.originCountryField.getText();
-        String licencePlate = this.licencePlateField.getText();
-        long value = Long.parseLong(this.valueField.getText());
-        Date date = null;
+        String brand;
+        String model;
+        String originCountry;
+        String licencePlate;
+        long value;
+        try {
+            brand = this.brandField.getText();
+            model = this.modelField.getText();
+            originCountry = this.originCountryField.getText();
+            licencePlate = this.licencePlateField.getText();
+            value = Long.parseLong(this.valueField.getText());
+        } catch (Exception e) {
+            error("Parsing");
+            return;
+        }
+        Date date;
         try {
             date = format.parse(this.dateField.getText());
         } catch (ParseException e) {
-            // todo error screen
-            e.printStackTrace();
+            error("Parsing, date format is dd/MM/yyyy");
             return;
         }
         try {
@@ -115,25 +135,43 @@ public class VehiclesController implements Initializable {
             } else if (this.carRadioButton.isSelected()) {
                 DBConnector.getInstance().addVehicle(new Car(brand, licencePlate, value, date, originCountry, model));
             } else {
-                // todo error screen
+                error("Select a radio button");
+                return;
             }
         } catch (SQLException e) {
-            // todo error screen
+            error("SQL");
             e.printStackTrace();
+            return;
         }
         this.confirmButton.getScene().getWindow().hide();
-        this.updateListView();
+        VehiclesApp vehiclesApp = new VehiclesApp();
+        Stage stage = new Stage();
+        try {
+            vehiclesApp.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void onCancelButtonClick() {
         this.cancelButton.getScene().getWindow().hide();
+        VehiclesApp vehiclesApp = new VehiclesApp();
+        Stage stage = new Stage();
+        try {
+            vehiclesApp.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateListView() {
+        if (this.vehicleListView == null) {
+            return;
+        }
         System.out.println("update");
-        ArrayList<Car> allCars = null;
-        ArrayList<Scooter> allScooters = null;
+        ArrayList<Car> allCars;
+        ArrayList<Scooter> allScooters;
         try {
             allCars = DBConnector.getInstance().getAllCars();
             allScooters = DBConnector.getInstance().getAllScooters();
@@ -156,5 +194,28 @@ public class VehiclesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.updateListView();
+    }
+
+    private void error(String origin) {
+        ErrorApp errorApp = new ErrorApp(origin);
+        Stage stage = new Stage();
+        try {
+            errorApp.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void toMainMenu() {
+        this.returnButton.getScene().getWindow().hide();
+        MainApp mainApp = new MainApp();
+        Stage stage = new Stage();
+        try {
+            mainApp.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 }

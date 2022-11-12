@@ -24,6 +24,7 @@ public class MainAppController {
     private void onCarsClick() {
         System.out.println("Cars click");
         VehiclesApp vehiclesApp = new VehiclesApp();
+        this.cars.getScene().getWindow().hide();
         Stage stage = new Stage();
         try {
             vehiclesApp.start(stage);

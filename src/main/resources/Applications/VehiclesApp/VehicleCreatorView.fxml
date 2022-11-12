@@ -42,13 +42,13 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
          <children>
             <Label text="Value" />
-            <TextField fx:id="valueField" />
+            <TextField fx:id="valueField" promptText="€" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
          <children>
             <Label text="Date" />
-            <TextField fx:id="dateField" />
+            <TextField fx:id="dateField" promptText="dd/MM/yyyy" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">

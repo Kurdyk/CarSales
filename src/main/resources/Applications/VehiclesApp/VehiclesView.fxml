@@ -56,9 +56,10 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="627.0" spacing="100.0">
          <children>
+            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#toMainMenu" text="Return" />
             <Button mnemonicParsing="false" onAction="#onDetailButtonClick" text="Details" />
             <Button mnemonicParsing="false" text="Order" />
-            <Button mnemonicParsing="false" onMouseClicked="#onAddVehicleButtonClick" text="Add new vehicle" />
+            <Button fx:id="newVehicleButton" mnemonicParsing="false" onMouseClicked="#onAddVehicleButtonClick" text="Add new vehicle" />
          </children>
       </HBox>
    </children>

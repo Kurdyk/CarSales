@@ -22,7 +22,8 @@ public class DBConnector {
      * Private constructor for instantiation
      */
     private DBConnector() {
-        String DB_URL = "jdbc:mysql://192.168.1.20:3306/CarSales";
+//        String DB_URL = "jdbc:mysql://192.168.1.20:3306/CarSales";
+        String DB_URL = "jdbc:mysql://localhost:3306/CarSales";
         String USER = "louis";
         String PASS = "";
         try {
@@ -115,27 +116,27 @@ public class DBConnector {
     }
 
     public long getNextAvailableVehicleId() throws SQLException {
-        String queryCars = "SELECT MAX(id) FROM Cars;";
-        String queryScooter = "SELECT MAX(id) FROM Scooters;";
+        String queryCars = "SELECT MAX(id) as 'id' FROM Cars;";
+        String queryScooter = "SELECT MAX(id) 'id' FROM Scooters;";
         return queryId(queryCars, queryScooter);
     }
 
     public long getNextAvailableClientId() throws SQLException {
-        String queryParticular = "SELECT MAX(id) FROM Particular;";
-        String queryCompany = "SELECT MAX(id) FROM Company;";
+        String queryParticular = "SELECT MAX(id) as 'id' FROM Particular;";
+        String queryCompany = "SELECT MAX(id) as 'id' FROM Company;";
         return queryId(queryParticular, queryCompany);
     }
 
-    private long queryId(String table1, String table2) throws SQLException {
+    private long queryId(String query1, String query2) throws SQLException {
         long result = 0;
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(table1);
-        if (!resultSet.next()) {
+        ResultSet resultSet = statement.executeQuery(query1);
+        if (resultSet.next()) {
             result = resultSet.getLong("id");
         }
-        resultSet = statement.executeQuery(table2);
-        if (!resultSet.next()) {
-            result = resultSet.getLong("id");
+        resultSet = statement.executeQuery(query2);
+        if (resultSet.next()) {
+            result = Math.max(resultSet.getLong("id"), result);
         }
         return result + 1;
     }

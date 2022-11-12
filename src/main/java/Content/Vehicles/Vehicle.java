@@ -1,6 +1,9 @@
 package Content.Vehicles;
 
+import Applications.ErrorApp.ErrorApp;
 import Content.DataBase.DBConnector;
+import javafx.css.SizeUnits;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -33,13 +36,19 @@ public class Vehicle {
         this.date = date;
         this.originCountry = originCountry;
         this.model = model;
-
         if (idClass == 0) {
             try {
                 idClass = DBConnector.getInstance().getNextAvailableVehicleId();
             } catch (SQLException e) {
-                // todo error screen
                 e.printStackTrace();
+                ErrorApp errorApp = new ErrorApp("SQL reading");
+                Stage stage = new Stage();
+                try {
+                    errorApp.start(stage);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    System.exit(1);
+                }
             }
         }
         this.id = idClass++;

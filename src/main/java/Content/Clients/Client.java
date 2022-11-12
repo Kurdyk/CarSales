@@ -1,6 +1,8 @@
 package Content.Clients;
 
+import Applications.ErrorApp.ErrorApp;
 import Content.DataBase.DBConnector;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
@@ -28,8 +30,14 @@ public class Client {
             try {
                idClass = DBConnector.getInstance().getNextAvailableClientId();
             } catch (SQLException e) {
-                // todo error screen
-                e.printStackTrace();
+                ErrorApp errorApp = new ErrorApp("SQL");
+                Stage stage = new Stage();
+                try {
+                    errorApp.start(stage);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                System.exit(1);
             }
         }
         this.id = idClass++;
