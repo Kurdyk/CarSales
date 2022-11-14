@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="469.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Applications.ClientApp.ClientController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
+         <children>
+            <RadioButton fx:id="particularRadioButton" mnemonicParsing="false" text="Particular">
+               <toggleGroup>
+                  <ToggleGroup fx:id="radioButtonGroup" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="companyRadioButton" mnemonicParsing="false" text="Company" toggleGroup="$radioButtonGroup" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="648.0" spacing="60.0">
+         <children>
+            <Label text="Name" />
+            <TextField fx:id="nameField" prefHeight="24.0" prefWidth="204.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
+         <children>
+            <Label text="Address" />
+            <TextField fx:id="addressField" prefHeight="24.0" prefWidth="207.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
+         <children>
+            <Label text="Siret" />
+            <TextField fx:id="siretField" prefHeight="24.0" prefWidth="205.0" promptText="Only needed for companies" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
+         <children>
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" text="Confirm" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancelButtonClick" text="Cancel" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" />
+   </padding>
+</VBox>

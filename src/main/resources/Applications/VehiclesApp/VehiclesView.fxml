@@ -41,7 +41,7 @@
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                      <children>
                         <Label text="Model" />
-                        <Text fx:id="Model" strokeType="OUTSIDE" strokeWidth="0.0" text="N/A" />
+                        <Text fx:id="model" strokeType="OUTSIDE" strokeWidth="0.0" text="N/A" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -56,9 +56,10 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="627.0" spacing="100.0">
          <children>
+            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#toMainMenu" text="Return" />
             <Button mnemonicParsing="false" onAction="#onDetailButtonClick" text="Details" />
-            <Button mnemonicParsing="false" text="Order" />
-            <Button mnemonicParsing="false" onMouseClicked="#onAddVehicleButtonClick" text="Add new vehicle" />
+            <Button mnemonicParsing="false" onAction="#onOrderButtonClick" text="Order" />
+            <Button fx:id="newVehicleButton" mnemonicParsing="false" onMouseClicked="#onAddVehicleButtonClick" text="Add new vehicle" />
          </children>
       </HBox>
    </children>

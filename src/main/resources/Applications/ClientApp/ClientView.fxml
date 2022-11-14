@@ -42,11 +42,12 @@
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="150.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
          <children>
+            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#toMainMenu" text="Return" />
             <Button mnemonicParsing="false" onAction="#onDetailsClick" text="Details" />
             <Button mnemonicParsing="false" onAction="#onOrderHistoryClick" text="Order history" />
-            <Button mnemonicParsing="false" onAction="#onNewClientClick" text="New client" />
+            <Button fx:id="newClientButton" mnemonicParsing="false" onAction="#onNewClientClick" text="New client" />
          </children>
       </HBox>
    </children>

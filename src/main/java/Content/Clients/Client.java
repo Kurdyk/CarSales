@@ -1,23 +1,50 @@
 package Content.Clients;
 
+import Applications.ErrorApp.ErrorApp;
+import Content.DataBase.DBConnector;
+import javafx.stage.Stage;
+
+import java.sql.SQLException;
+
 public class Client {
 
-   protected final String name;
-   protected String address;
-   protected int nbOrder;
+    private static long idClass = 0;
+
+    protected final String name;
+    protected final String address;
+    protected final int nbOrder;
+    protected final long id;
+
+    public Client(String name, String address, int nbOrder, long id) {
+        this.name = name;
+        this.address = address;
+        this.nbOrder = nbOrder;
+        this.id = id;
+    }
 
     public Client(String name, String address) {
         this.name = name;
         this.address = address;
         this.nbOrder = 0;
+        if (idClass == 0) {
+            try {
+               idClass = DBConnector.getInstance().getNextAvailableClientId();
+            } catch (SQLException e) {
+                ErrorApp errorApp = new ErrorApp("SQL");
+                Stage stage = new Stage();
+                try {
+                    errorApp.start(stage);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                System.exit(1);
+            }
+        }
+        this.id = idClass++;
     }
 
     public String getAddress() {
         return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getName() {
@@ -34,6 +61,8 @@ public class Client {
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", nbOrder=" + nbOrder +
+                ", id=" + id +
                 '}';
     }
+
 }

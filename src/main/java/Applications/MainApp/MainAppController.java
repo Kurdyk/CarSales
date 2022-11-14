@@ -24,6 +24,7 @@ public class MainAppController {
     private void onCarsClick() {
         System.out.println("Cars click");
         VehiclesApp vehiclesApp = new VehiclesApp();
+        this.cars.getScene().getWindow().hide();
         Stage stage = new Stage();
         try {
             vehiclesApp.start(stage);
@@ -35,6 +36,7 @@ public class MainAppController {
     @FXML
     private void onClientsClicked() {
         System.out.println("Client click");
+        this.clients.getScene().getWindow().hide();
         ClientApp clientApp = new ClientApp();
         Stage stage = new Stage();
         try {
