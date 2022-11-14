@@ -6,7 +6,6 @@ import Content.Clients.Particular;
 import Content.Vehicles.Car;
 import Content.Vehicles.Scooter;
 import Content.Vehicles.Vehicle;
-import javafx.css.SizeUnits;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -22,8 +21,8 @@ public class DBConnector {
      * Private constructor for instantiation
      */
     private DBConnector() {
-//        String DB_URL = "jdbc:mysql://192.168.1.20:3306/CarSales";
-        String DB_URL = "jdbc:mysql://localhost:3306/CarSales";
+        String DB_URL = "jdbc:mysql://192.168.149.105:3306/CarSales";
+//        String DB_URL = "jdbc:mysql://localhost:3306/CarSales";
         String USER = "louis";
         String PASS = "";
         try {

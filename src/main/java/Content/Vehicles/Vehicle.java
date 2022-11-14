@@ -87,6 +87,12 @@ public class Vehicle {
                 '}';
     }
 
+//    public long getDiscountValue() {
+//        Date currentDate = new Date();
+//        long diff = currentDate.getYear() - this.date.getYear();
+//        return Math.max(0, this.value - (this.value * diff / 100.0))
+//    }
+
     public String toSQLFormat() {
         java.sql.Date sqlDate = new java.sql.Date(this.date.getTime());
         String dateForInsert = "STR_TO_DATE('" + sqlDate + "','%Y-%m-%d')";

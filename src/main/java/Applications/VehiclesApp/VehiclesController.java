@@ -2,6 +2,7 @@ package Applications.VehiclesApp;
 
 import Applications.ErrorApp.ErrorApp;
 import Applications.MainApp.MainApp;
+import Applications.OrderApp.OrderApp;
 import Content.DataBase.DBConnector;
 import Content.Vehicles.Car;
 import Content.Vehicles.Scooter;
@@ -186,6 +187,22 @@ public class VehiclesController implements Initializable {
             this.vehicleListView.getItems().add(scooter);
         }
         this.vehicleListView.refresh();
+    }
+
+    @FXML
+    private void onOrderButtonClick() {
+        Vehicle vehicle = this.vehicleListView.getSelectionModel().getSelectedItem();
+        if (vehicle == null) {
+            return;
+        }
+        OrderApp orderApp = new OrderApp(vehicle);
+        Stage stage = new Stage();
+        try {
+            orderApp.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     @Override
