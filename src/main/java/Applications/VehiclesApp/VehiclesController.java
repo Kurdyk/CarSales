@@ -47,6 +47,10 @@ public class VehiclesController implements Initializable {
     private Button newVehicleButton;
     @FXML
     private Button returnButton;
+    @FXML
+    private Button filterButton;
+    @FXML
+    private TextField filterPrompt;
 
     /// Creation View
     private final Stage creationScreen = new Stage();
@@ -75,13 +79,10 @@ public class VehiclesController implements Initializable {
 
     @FXML
     private void onDetailButtonClick() {
-        System.out.println("Detail");
-
         Vehicle current = vehicleListView.getSelectionModel().getSelectedItem();
         if (current == null) {
             return;
         }
-        System.out.println(current);
         brand.setText(current.getBrand());
         licencePlate.setText(current.getLicencePlate());
         value.setText(String.valueOf(current.getValue()));
@@ -92,7 +93,6 @@ public class VehiclesController implements Initializable {
 
     @FXML
     private void onAddVehicleButtonClick() throws IOException {
-        System.out.println("New vehicle");
         this.newVehicleButton.getScene().getWindow().hide();
         FXMLLoader fxmlLoader = new FXMLLoader(VehiclesApp.class.getResource("VehicleCreatorView.fxml"));
         this.dateField.setTextFormatter(new TextFormatter<>(new DateTimeStringConverter(format)));
@@ -104,7 +104,6 @@ public class VehiclesController implements Initializable {
 
     @FXML
     private void onConfirmButtonClick() {
-        System.out.println("Confirm");
         String brand;
         String model;
         String originCountry;
@@ -163,11 +162,8 @@ public class VehiclesController implements Initializable {
         }
     }
 
-    private void updateListView() {
-        if (this.vehicleListView == null) {
-            return;
-        }
-        System.out.println("update");
+    private ArrayList<Vehicle> buildList() {
+        ArrayList<Vehicle> result = new ArrayList<>();
         ArrayList<Car> allCars;
         ArrayList<Scooter> allScooters;
         try {
@@ -175,17 +171,20 @@ public class VehiclesController implements Initializable {
             allScooters = DBConnector.getInstance().getAllScooters();
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
+        }
+        result.addAll(allCars);
+        result.addAll(allScooters);
+        return result;
+    }
+
+    private void updateListView() {
+        if (this.vehicleListView == null) {
             return;
         }
-        System.out.println(allCars.size());
-        System.out.println(allScooters.size());
         this.vehicleListView.getItems().removeAll();
-        for (Vehicle car : allCars) {
-            this.vehicleListView.getItems().add(car);
-        }
-        for (Vehicle scooter : allScooters) {
-            this.vehicleListView.getItems().add(scooter);
-        }
+        for (Vehicle vehicle : Objects.requireNonNull(this.buildList()))
+            this.vehicleListView.getItems().add(vehicle);
         this.vehicleListView.refresh();
     }
 
@@ -231,5 +230,13 @@ public class VehiclesController implements Initializable {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    @FXML
+    private void onFilterButtonClick() {
+        FilterParser filterParser = new FilterParser(this.filterPrompt.getText(), this.buildList());
+        ArrayList<Vehicle> toShow = filterParser.filter();
+        this.vehicleListView.getItems().clear();
+        this.vehicleListView.getItems().addAll(toShow);
     }
 }

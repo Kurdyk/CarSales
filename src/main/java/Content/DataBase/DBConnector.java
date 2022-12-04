@@ -168,7 +168,6 @@ public class DBConnector {
 
     private void addParticular(Particular particular) throws SQLException {
         String query = "INSERT INTO Particular (id, Name, Address, nbOrder) VALUE (" + particular.toSQLFormat() + ");";
-        System.out.println(query);
         Statement statement = connection.createStatement();
         statement.executeUpdate(query);
     }
