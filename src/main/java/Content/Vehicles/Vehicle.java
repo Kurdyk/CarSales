@@ -87,11 +87,12 @@ public class Vehicle {
                 '}';
     }
 
-//    public long getDiscountValue() {
-//        Date currentDate = new Date();
-//        long diff = currentDate.getYear() - this.date.getYear();
-//        return Math.max(0, this.value - (this.value * diff / 100.0))
-//    }
+    public long getDiscountValue() {
+        Date currentDate = new Date();
+        long yearDiff = currentDate.getYear() - this.date.getYear();
+        long monthDiff = Math.max(currentDate.getMonth() - this.date.getMonth(), 0) + 12 * yearDiff;
+        return Math.max(this.value / 2, this.value - (long) (this.value * (2 * monthDiff/ 100.0)));
+    }
 
     public String toSQLFormat() {
         java.sql.Date sqlDate = new java.sql.Date(this.date.getTime());

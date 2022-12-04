@@ -6,6 +6,7 @@ import Content.Clients.Particular;
 import Content.Vehicles.Car;
 import Content.Vehicles.Scooter;
 import Content.Vehicles.Vehicle;
+import com.mysql.cj.jdbc.exceptions.NotUpdatable;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -21,8 +22,8 @@ public class DBConnector {
      * Private constructor for instantiation
      */
     private DBConnector() {
-        String DB_URL = "jdbc:mysql://192.168.149.105:3306/CarSales";
-//        String DB_URL = "jdbc:mysql://localhost:3306/CarSales";
+//        String DB_URL = "jdbc:mysql://192.168.149.105:3306/CarSales";
+        String DB_URL = "jdbc:mysql://localhost:3306/CarSales";
         String USER = "louis";
         String PASS = "";
         try {
@@ -44,7 +45,7 @@ public class DBConnector {
 
     /// SELECT METHODS
     public ArrayList<Car> getAllCars() throws SQLException {
-        String query = "SELECT * FROM Cars;";
+        String query = "SELECT * FROM Cars WHERE NOT Sold;";
         ArrayList<Car> result = new ArrayList<>();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
@@ -63,7 +64,7 @@ public class DBConnector {
     }
 
     public ArrayList<Scooter> getAllScooters() throws SQLException {
-        String query = "SELECT * FROM Scooters;";
+        String query = "SELECT * FROM Scooters WHERE NOT Sold;";
         ArrayList<Scooter> result = new ArrayList<>();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
@@ -140,6 +141,16 @@ public class DBConnector {
         return result + 1;
     }
 
+    public double queryTaxRate(String countryCode) throws SQLException, NullPointerException {
+        String query = "SELECT Taxe_rate FROM CountryTaxes WHERE Country_Code = '" + countryCode + "';";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        if (resultSet.next()) {
+            return resultSet.getDouble("Taxe_rate");
+        }
+        throw new NullPointerException();
+    }
+
     /// INSERT METHODS
     public void addVehicle(Vehicle vehicle) throws SQLException {
         String tableName = (vehicle instanceof Car)? "Cars" : "Scooters";
@@ -191,5 +202,6 @@ public class DBConnector {
         statement = connection.createStatement();
         statement.executeUpdate(query);
     }
+
 
 }

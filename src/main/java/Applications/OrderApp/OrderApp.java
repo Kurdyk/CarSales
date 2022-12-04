@@ -1,6 +1,5 @@
 package Applications.OrderApp;
 
-import Applications.OrderHistoryApp.OrderHistoryApp;
 import Content.Vehicles.Vehicle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,9 +17,9 @@ public class OrderApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(OrderApp.class.getResource("OrderView.fxml"));
+        OrderAppController orderAppController = new OrderAppController(vehicleToSale);
+        fxmlLoader.setController(orderAppController);
         Scene scene = new Scene(fxmlLoader.load(), 800, 500);
-        OrderAppController orderAppController = fxmlLoader.getController();
-        orderAppController.setToSell(vehicleToSale);
         stage.setTitle("A car vendor App");
         stage.setScene(scene);
         stage.show();
