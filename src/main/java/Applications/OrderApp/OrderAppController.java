@@ -6,6 +6,7 @@ import Content.Clients.Client;
 import Content.Clients.Company;
 import Content.Clients.Particular;
 import Content.DataBase.DBConnector;
+import Content.Order;
 import Content.Vehicles.Vehicle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -69,7 +70,27 @@ public class OrderAppController implements Initializable {
 
     @FXML
     private void onConfirmButtonClick() {
-        // TODO : generate pdf and set Vehicle to sold in BD
+        // TODO : generate pdf
+        Client buyer = this.clientSelector.getSelectionModel().getSelectedItem();
+        Order order = new Order(buyer, this.toSell, this.paidCheck.isSelected());
+        DBConnector dbConnector;
+        try {
+            dbConnector = DBConnector.getInstance();
+            dbConnector.addOrder(order);
+            dbConnector.setToSold(this.toSell);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ErrorApp errorApp = new ErrorApp("Connexion error");
+            Stage stage = new Stage();
+            try {
+                errorApp.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                System.exit(1);
+            }
+            return;
+        }
+        this.clientSelector.getScene().getWindow().hide();
     }
 
     private long finalPrice() throws EmptyCodeException, NullPointerException {
