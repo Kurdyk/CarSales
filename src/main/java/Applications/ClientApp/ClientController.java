@@ -80,13 +80,27 @@ public class ClientController implements Initializable {
         }
         name.setText(client.getName());
         address.setText(client.getAddress());
-        nbOrders.setText(String.valueOf(client.getNbOrder()));
         siret.setText((client instanceof Company)? ((Company) client).getSiret() : "N/A");
+        try {
+            nbOrders.setText(String.valueOf(DBConnector.getInstance().getNumberOfOrder(client)));
+        } catch (SQLException e) {
+            ErrorApp errorApp = new ErrorApp("SQL");
+            Stage stage = new Stage();
+            try {
+                errorApp.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            nbOrders.setText("N/A");
+        }
     }
 
     @FXML
     private void onOrderHistoryClick() {
         System.out.println("Order History click");
+        if (this.clientListView.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
         OrderHistoryApp orderHistoryApp = new OrderHistoryApp(this.clientListView.getSelectionModel().getSelectedItem());
         Stage stage = new Stage();
         try {
