@@ -4,6 +4,7 @@ module Applications.project {
     requires itextpdf;
     requires java.sql;
     requires mysql.connector.java;
+    requires org.json;
 
     opens Applications.VehiclesApp to javafx.fxml;
     opens Applications.ClientApp to javafx.fxml;
