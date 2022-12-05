@@ -3,6 +3,7 @@ package Content.DataBase;
 import Content.Clients.Client;
 import Content.Clients.Company;
 import Content.Clients.Particular;
+import Content.Order;
 import Content.Vehicles.Car;
 import Content.Vehicles.Scooter;
 import Content.Vehicles.Vehicle;
@@ -133,6 +134,61 @@ public class DBConnector {
         return result;
     }
 
+    public Client getClientById(long clientId) throws SQLException {
+        String query = "SELECT * FROM Particular WHERE id = " + clientId + ";";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        if (resultSet.next()) {
+            return new Particular(
+                    resultSet.getString("Name"),
+                    resultSet.getString("Address"),
+                    resultSet.getInt("nbOrder"),
+                    resultSet.getLong("id"));
+        }
+        query = "SELECT * FROM Company WHERE id = " + clientId + ";";
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+        if (resultSet.next()) {
+            return new Company(
+                    resultSet.getString("Name"),
+                    resultSet.getString("Address"),
+                    resultSet.getInt("nbOrder"),
+                    resultSet.getLong("id"),
+                    resultSet.getString("Siret"));
+        }
+        return null;
+    }
+
+    public Vehicle getVehicleById(long vehicleId) throws SQLException {
+        String query = "SELECT * FROM Cars WHERE id = " + vehicleId + ";";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        if (resultSet.next()) {
+            return new Car(
+                    resultSet.getString("Brand"),
+                    resultSet.getString("licence_plate"),
+                    resultSet.getLong("price"),
+                    resultSet.getDate("EntryDate"),
+                    resultSet.getString("OriginCountry"),
+                    resultSet.getString("Model"),
+                    resultSet.getLong("id"));
+        }
+        query = "SELECT * FROM Company WHERE id = " + vehicleId + ";";
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+        if (resultSet.next()) {
+            return  new Scooter(
+                    resultSet.getString("Brand"),
+                    resultSet.getString("licence_plate"),
+                    resultSet.getLong("price"),
+                    resultSet.getDate("EntryDate"),
+                    resultSet.getString("OriginCountry"),
+                    resultSet.getString("Model"),
+                    resultSet.getLong("id"));
+        }
+        return null;
+    }
+
     public long getNextAvailableVehicleId() throws SQLException {
         String queryCars = "SELECT MAX(id) as 'id' FROM Cars;";
         String queryScooter = "SELECT MAX(id) 'id' FROM Scooters;";
@@ -169,6 +225,22 @@ public class DBConnector {
         throw new NullPointerException();
     }
 
+    public ArrayList<Order> queryOrders(Client client) throws SQLException {
+        ArrayList<Order> result = new ArrayList<>();
+        String query = "SELECT * FROM Sales WHERE Buyer = " + client.getId() + ";";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while(resultSet.next()) {
+            Order order = new Order(this.getClientById(resultSet.getLong("Buyer")),
+                                    this.getVehicleById(resultSet.getLong("BroughtVehicle")),
+                                    resultSet.getBoolean("Payed"),
+                                    resultSet.getString("Status")
+                    );
+            result.add(order);
+        }
+        return result;
+    }
+
     /// INSERT METHODS
     public void addVehicle(Vehicle vehicle) throws SQLException {
         String tableName = (vehicle instanceof Car)? "Cars" : "Scooters";
@@ -198,6 +270,13 @@ public class DBConnector {
         }
     }
 
+    public void addOrder(Order order) throws SQLException {
+        String query = "INSERT INTO Sales (Buyer, BroughtVehicle, Status, Payed) VALUE (" + order.toSQLFormat() + ");";
+        System.out.println(query);
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(query);
+    }
+
     /// DELETE METHODS
     public void deleteFromTableViaId(long id, String tableName) throws SQLException {
         String query = "DELETE FROM " + tableName + " WHERE id = " + id + ";";
@@ -220,5 +299,16 @@ public class DBConnector {
         statement.executeUpdate(query);
     }
 
+    /// SET METHODS
+    public void setToSold(Vehicle vehicle) throws SQLException {
+        String query;
+        if (vehicle instanceof Car) {
+            query = "UPDATE Cars SET Sold= TRUE WHERE id = " + vehicle.getId() + ";";
+        } else {
+            query = "UPDATE Scooters SET Sold= TRUE WHERE id = " + vehicle.getId() + ";";
+        }
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(query);
+    }
 
 }

@@ -55,6 +55,8 @@ public class Client {
         return nbOrder;
     }
 
+    public long getId() { return this.id; }
+
     @Override
     public String toString() {
         return "Client{" +

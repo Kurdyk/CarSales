@@ -79,7 +79,7 @@ public class ClientController implements Initializable {
     @FXML
     private void onOrderHistoryClick() {
         System.out.println("Order History click");
-        OrderHistoryApp orderHistoryApp = new OrderHistoryApp();
+        OrderHistoryApp orderHistoryApp = new OrderHistoryApp(this.clientListView.getSelectionModel().getSelectedItem());
         Stage stage = new Stage();
         try {
             orderHistoryApp.start(stage);

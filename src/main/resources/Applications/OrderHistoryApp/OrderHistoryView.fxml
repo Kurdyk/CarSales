@@ -5,17 +5,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Applications.OrderHistoryApp.OrderHistoryController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="310.0" prefWidth="589.0">
          <children>
-            <ListView prefHeight="310.0" prefWidth="601.0" />
+            <ListView fx:id="orderListView" prefHeight="310.0" prefWidth="601.0" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="91.0" prefWidth="600.0" spacing="60.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#onExportAsPDFClick" text="Export as PDF file" />
-            <Button mnemonicParsing="false" text="Export as HTML file" />
+            <Button mnemonicParsing="false" text="Increment status" />
+            <Button mnemonicParsing="false" text="Modify paid status" />
+            <Button mnemonicParsing="false" text="See documents" />
          </children>
       </HBox>
    </children>
