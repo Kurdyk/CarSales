@@ -27,19 +27,6 @@ public class ConnexionApplication extends Application {
     }
 
     public static void main(String[] args) throws DocumentException, FileNotFoundException {
-        //launch();
-        /*
-        pdf building tests
-        * */
-
-        Client cli = new Client("Quidam","2 rue Victor Hugo",2,2343);
-        Vehicle vehicle = new Vehicle("Renault","GG-246-KM",30000,new Date(2015,4,3),"FRANCE","Espace");
-        Order order = new Order(cli,vehicle);
-
-        Director director = new Director(order);
-        CertificateBuilder builder = new CertificateBuilder();
-        director.constructRegistrationCertificate(builder);
-
-        Certificate immat = builder.build();
+        launch();
     }
 }
