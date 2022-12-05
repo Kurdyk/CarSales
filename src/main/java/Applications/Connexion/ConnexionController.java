@@ -1,6 +1,8 @@
 package Applications.Connexion;
 
+import Applications.ErrorApp.ErrorApp;
 import Applications.MainApp.MainApp;
+import Content.DataBase.DBConnector;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +11,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ConnexionController {
+
+    @FXML
+    private TextField portField;
+    @FXML
+    private TextField IpField;
 
     @FXML
     private TextField idField;
@@ -24,15 +33,22 @@ public class ConnexionController {
     protected void onConnexionButtonClick() {
         String id = idField.getText();
         String password = passwordField.getText();
-        System.out.println(id + password);
-        if (id.equals("Test")) {
-            System.out.println("reject");
+        String ip = IpField.getText();
+        String port = portField.getText();
+        DBConnector.setPASS(password);
+        DBConnector.setDB_URL("jdbc:mysql://" + ip + ":" + port + "/CarSales");
+        DBConnector.setUSER(id);
+        try {
+            DBConnector.getInstance();
+        } catch (SQLException e) {
+            ErrorApp errorApp = new ErrorApp("Connexion denied");
+            Stage stage = new Stage();
             try {
-                rejectConnexion();
-                return;
-            } catch (IOException e) {
-                e.printStackTrace();
+                errorApp.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
+            return;
         }
         MainApp mainApp = new MainApp();
         Stage stage = new Stage();

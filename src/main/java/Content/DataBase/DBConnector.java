@@ -15,21 +15,36 @@ import java.sql.*;
 
 public class DBConnector {
 
-    public static DBConnector instance = null;
+    private static DBConnector instance = null;
     private Connection connection = null;
+    private static String DB_URL;
+    private static String USER;
+    private static String PASS;
+
+    public static void setDB_URL(String newURL) {
+        DB_URL = newURL;
+        instance = null;
+    }
+
+    public static void setUSER(String newUser) {
+        USER = newUser;
+        instance = null;
+    }
+
+    public static void setPASS(String newPass) {
+        PASS = newPass;
+        instance = null;
+    }
 
     /**
      * Private constructor for instantiation
      */
-    private DBConnector() {
-//        String DB_URL = "jdbc:mysql://192.168.149.105:3306/CarSales";
-        String DB_URL = "jdbc:mysql://localhost:3306/CarSales";
-        String USER = "louis";
-        String PASS = "";
+    private DBConnector() throws SQLException{
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = DriverManager.getConnection(DB_URL, USER, PASS);
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -38,8 +53,11 @@ public class DBConnector {
      * Instance getter
      * @return the only instance of the class
      */
-    public static DBConnector getInstance() {
-        return Objects.requireNonNullElseGet(instance, DBConnector::new);
+    public static DBConnector getInstance() throws SQLException {
+        if (DBConnector.instance == null) {
+            DBConnector.instance = new DBConnector();
+        }
+        return DBConnector.instance;
     }
 
 

@@ -12,7 +12,15 @@ import java.util.Date;
 public class DBTester {
 
     public static void main(String[] args) {
-        DBConnector dbConnector = DBConnector.getInstance();
+        DBConnector dbConnector = null;
+        DBConnector.setUSER("louis");
+        DBConnector.setPASS("");
+        DBConnector.setDB_URL("localhost");
+        try {
+            dbConnector = DBConnector.getInstance();
+        } catch (SQLException e) {
+            System.exit(1);
+        }
         try {
             dbConnector.deleteAll();
         } catch (SQLException e) {

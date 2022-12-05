@@ -77,7 +77,12 @@ public class OrderAppController implements Initializable {
 
         if (countryCode.equals("")) throw new EmptyCodeException("Empty code");
 
-        DBConnector dbConnector = DBConnector.getInstance();
+        DBConnector dbConnector;
+        try {
+            dbConnector = DBConnector.getInstance();
+        } catch (SQLException e) {
+            return -1;
+        }
         double taxRate = 1.0;
         try {
             taxRate = dbConnector.queryTaxRate(countryCode);
