@@ -7,15 +7,11 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="310.0" prefWidth="589.0">
-         <children>
-            <ListView fx:id="orderListView" prefHeight="310.0" prefWidth="601.0" />
-         </children>
-      </HBox>
+      <ListView fx:id="orderListView" prefHeight="310.0" prefWidth="601.0" />
       <HBox alignment="CENTER" prefHeight="91.0" prefWidth="600.0" spacing="60.0">
          <children>
-            <Button mnemonicParsing="false" text="Increment status" />
-            <Button mnemonicParsing="false" text="Modify paid status" />
+            <Button mnemonicParsing="false" onAction="#onIncrementStatusButtonClick" text="Increment status" />
+            <Button mnemonicParsing="false" onAction="#onSetToPayedButtonClick" text="Set to payed" />
             <Button mnemonicParsing="false" text="See documents" />
          </children>
       </HBox>

@@ -8,11 +8,20 @@ public class Order {
     private Client client;
     private Vehicle vehicle;
     private boolean payed;
-    private enum status {
+    public enum status {
         OUTGOING,
         VALIDATED,
         DELIVERED
     }
+
+    public boolean isPayed() {
+        return payed;
+    }
+
+    public status getCurrentStatus() {
+        return currentStatus;
+    }
+
     private status currentStatus;
 
     public Order(Client client, Vehicle vehicle, boolean payed) {

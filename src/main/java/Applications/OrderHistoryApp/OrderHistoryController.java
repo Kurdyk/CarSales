@@ -9,6 +9,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import com.itextpdf.text.Document;
 import javafx.stage.Stage;
@@ -32,6 +33,52 @@ public class OrderHistoryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+       this.updateList();
+    }
+
+    @FXML
+    private void onSetToPayedButtonClick() {
+        if (this.orderListView.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
+        try {
+            DBConnector.getInstance().setToPay(this.orderListView.getSelectionModel().getSelectedItem());
+        } catch (SQLException e) {
+            ErrorApp errorApp = new ErrorApp("Connexion denied");
+            Stage stage = new Stage();
+            try {
+                errorApp.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                System.exit(1);
+            }
+        }
+        this.updateList();
+    }
+
+    @FXML
+    private void onIncrementStatusButtonClick() {
+        if (this.orderListView.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
+        try {
+            DBConnector.getInstance().increaseOrderStatus(this.orderListView.getSelectionModel().getSelectedItem());
+        } catch (SQLException e) {
+            ErrorApp errorApp = new ErrorApp("Connexion denied");
+            Stage stage = new Stage();
+            try {
+                errorApp.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                System.exit(1);
+            }
+        }
+        this.updateList();
+    }
+
+    private void updateList() {
+        this.orderListView.getItems().clear();
+        this.orderListView.getItems().removeAll();
         try {
             this.orderListView.getItems().addAll(DBConnector.getInstance().queryOrders(this.client));
         } catch (SQLException e) {

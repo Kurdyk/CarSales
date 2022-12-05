@@ -241,6 +241,17 @@ public class DBConnector {
         return result;
     }
 
+    public long getNumberOfOrder(Client client) throws SQLException {
+        String query = "SELECT COUNT(*) AS COUNT FROM Sales WHERE Buyer = " + client.getId() + ";";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        if (resultSet.next()) {
+            return resultSet.getLong("count");
+        } else {
+            throw new SQLException("NOT FOUND");
+        }
+    }
+
     /// INSERT METHODS
     public void addVehicle(Vehicle vehicle) throws SQLException {
         String tableName = (vehicle instanceof Car)? "Cars" : "Scooters";
@@ -311,4 +322,26 @@ public class DBConnector {
         statement.executeUpdate(query);
     }
 
+    public void increaseOrderStatus(Order order) throws SQLException {
+        String fill = null;
+        switch (order.getCurrentStatus()) {
+            case OUTGOING -> fill = "'VALIDATED'";
+            case VALIDATED -> fill = "'DELIVERED'";
+            default -> {return;}
+        }
+        String query = "UPDATE Sales SET Status= " + fill + " WHERE Buyer= " + order.getClient().getId() +
+                " AND BroughtVehicle= " + order.getVehicle().getId() + ";";
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(query);
+    }
+
+    public void setToPay(Order order) throws SQLException {
+        if (order.isPayed()) {
+            return;
+        }
+        String query = "UPDATE Sales SET Payed=TRUE WHERE Buyer= " + order.getClient().getId() +
+                " AND BroughtVehicle= " + order.getVehicle().getId() + ";";
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(query);
+    }
 }
