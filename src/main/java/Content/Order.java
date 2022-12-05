@@ -62,6 +62,14 @@ public class Order {
         return this.client.getId() + ", " +this.vehicle.getId() + ", " + currentStatus + ", " + payed;
     }
 
+    public Vehicle getVehicle() {
+        return this.vehicle;
+    }
+
+    public Client getClient() {
+        return this.client;
+    }
+
     @Override
     public String toString() {
         return "Client" + this.client.toString() + " ordered " + this.vehicle.toString() +
