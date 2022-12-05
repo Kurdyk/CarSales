@@ -50,6 +50,21 @@
             <version>7.2.4</version>
             <type>pom</type>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.tnakamot/json-parser -->
+        <!--<dependency>
+            <groupId>com.github.tnakamot</groupId>
+            <artifactId>json-parser</artifactId>
+            <version>0.2.1</version>
+        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <!--<dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+        </dependency>-->
+
+
 
 
     </dependencies>

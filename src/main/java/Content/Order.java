@@ -25,14 +25,22 @@ public class Order {
         this.id = nbOrders++;
     }
 
+    public Vehicle getVehicle() {
+        return this.vehicle;
+    }
+
+    public Client getClient() {
+        return this.client;
+    }
+
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", client=" + client +
-                ", vehicle=" + vehicle +
-                ", payed=" + payed +
-                ", currentStatus=" + currentStatus +
+        return "{" +
+                "\"id\":" + id +
+                ",\"client\":" + client.toString() +
+                ",\"vehicle\":" + vehicle +
+                ",\"payed\":" + payed +
+                ",\"currentStatus\":\"" + currentStatus +"\"" +
                 '}';
     }
 }
