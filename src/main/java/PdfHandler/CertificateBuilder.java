@@ -163,25 +163,36 @@ public class CertificateBuilder implements PdfBuilder {
         /*JSONObject orderjson = new JSONObject(order.toString());
         String cli = orderjson.getString("client");
         */
-
-        l.put("License Plate",order.getVehicle().getLicencePlate());
-        l.put("Purchase date","../../..");
-        l.put("Country of origin",order.getVehicle().getOriginCountry());
-        l.put("Brand",order.getVehicle().getBrand());
-        l.put("Model",order.getVehicle().getModel());
-        l.put("Dominant color","??");
+        if ((order.getVehicle()!=null) && (order.getClient()!=null)) {
+            l.put("License Plate",order.getVehicle().getLicencePlate());
+            l.put("Purchase date","../../..");
+            l.put("Country of origin",order.getVehicle().getOriginCountry());
+            l.put("Brand",order.getVehicle().getBrand());
+            l.put("Model",order.getVehicle().getModel());
+            l.put("Dominant color","??");
+        } else {
+            l.put("License Plate","");
+            l.put("Adress","");
+            l.put("SIRET","");
+        }
         return l;
     }
 
     public Map makeMapClient() {
         Map l = new HashMap();
-        l.put("Name",order.getClient().getName());
-        l.put("Adress",order.getClient().getAddress());
-        l.put("SIRET","");
+        if ((order.getVehicle()!= null) && (order.getClient()!=null)) {
+            l.put("Name",order.getClient().getName());
+            l.put("Adress",order.getClient().getAddress());
+            l.put("SIRET","");
+        } else {
+            l.put("Name","");
+            l.put("Adress","");
+            l.put("SIRET","");
+        }
         //TODO: ajouter siret si company
         return l;
     }
-        public void addLines(PdfPTable table,Map<String,String> line, int columns) {
+       /* public void addLines(PdfPTable table,Map<String,String> line, int columns) {
         int i=0;
         int k=0;
         ArrayList tmp=new ArrayList<>();
@@ -199,7 +210,7 @@ public class CertificateBuilder implements PdfBuilder {
                    tmp.clear();
                }
            }
-    }
+    }*/
 
 
 
@@ -228,7 +239,8 @@ public class CertificateBuilder implements PdfBuilder {
         document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(path));
         document.open();
-        //System.out.println("opening...");
+
+        System.out.println("opening...");
 
     }
 
