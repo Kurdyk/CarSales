@@ -8,18 +8,33 @@ import Content.Clients.Particular;
 import Content.DataBase.DBConnector;
 import Content.Order;
 import Content.Vehicles.Vehicle;
+import PdfHandler.Certificate;
+import PdfHandler.CertificateBuilder;
+import PdfHandler.Director;
+import PdfHandler.PurchaseBuilder;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.skin.TextInputControlSkin;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -71,9 +86,35 @@ public class OrderAppController implements Initializable {
     @FXML
     private void onConfirmButtonClick() {
         // TODO : generate pdf
+        // TODO : test
         Client buyer = this.clientSelector.getSelectionModel().getSelectedItem();
+        if (buyer==null) return;
         Order order = new Order(buyer, this.toSell, this.paidCheck.isSelected());
         DBConnector dbConnector;
+        File generatedPdfs = new File("generatedPdfs");
+        if (!generatedPdfs.exists()){
+            System.out.println("dir doesn't exist");
+            generatedPdfs.mkdirs();
+        }
+        Director director = new Director(order);
+        CertificateBuilder regBuilder = new CertificateBuilder();
+        CertificateBuilder transfBuilder = new CertificateBuilder();
+        PurchaseBuilder purchBuilder = new PurchaseBuilder();
+
+        try {
+            director.constructRegistrationCertificate(regBuilder,"generatedPdfs/RegistrationCertificate"+order.getClient().getId());
+            director.constructTransferCertificate(transfBuilder, "generatedPdfs/TransferCertificate"+order.getClient().getId());
+            director.constructPurchaseOrder(purchBuilder,"generatedPdfs/PurchaseOrder"+order.getVehicle().getId());
+            /*Certificate certif = */
+            regBuilder.build();
+            transfBuilder.build();
+            purchBuilder.build();
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         try {
             dbConnector = DBConnector.getInstance();
             dbConnector.addOrder(order);

@@ -17,12 +17,31 @@ public class Director {
     public Director(Order order) {
         this.order=order;
     }
-    public void constructRegistrationCertificate(PdfBuilder builder) throws DocumentException, FileNotFoundException {
+    public void constructRegistrationCertificate(PdfBuilder builder,String path) throws DocumentException, FileNotFoundException {
         //TODO: mieux faire (ordre)
-
-        builder.setPath("MyPdf.pdf");
+        builder.setPath(path);
         builder.setDocument();
         builder.setTitle("CERTIFICAT D'IMMATRICULATION DE VÉHICULE", Font.FontFamily.HELVETICA, new BaseColor(0,55,136));
+        builder.setVehicleSection(order);
+        builder.setClientSection(order);
+        builder.ClientSignature(order);
+        builder.AdministrationFrame(order);
+    }
+
+    public void constructTransferCertificate(PdfBuilder builder, String path) throws DocumentException, FileNotFoundException  {
+        builder.setPath(path);
+        builder.setDocument();
+        builder.setTitle("CERTIFICAT DE CESSION DE VÉHICULE",Font.FontFamily.HELVETICA, new BaseColor(102,0,204));
+        builder.setVehicleSection(order);
+        builder.setClientSection(order);
+        builder.ClientSignature(order);
+        builder.AdministrationFrame(order);
+    }
+
+    public void constructPurchaseOrder(PdfBuilder builder, String path) throws DocumentException, FileNotFoundException  {
+        builder.setPath(path);
+        builder.setDocument();
+        builder.setTitle("BON DE COMMANDE",Font.FontFamily.HELVETICA,new BaseColor(0,102,204));
         builder.setVehicleSection(order);
         builder.setClientSection(order);
         builder.ClientSignature(order);
