@@ -173,7 +173,7 @@ public class DBConnector {
                     resultSet.getString("Model"),
                     resultSet.getLong("id"));
         }
-        query = "SELECT * FROM Company WHERE id = " + vehicleId + ";";
+        query = "SELECT * FROM Scooters WHERE id = " + vehicleId + ";";
         statement = connection.createStatement();
         resultSet = statement.executeQuery(query);
         if (resultSet.next()) {
@@ -323,7 +323,7 @@ public class DBConnector {
     }
 
     public void increaseOrderStatus(Order order) throws SQLException {
-        String fill = null;
+        String fill;
         switch (order.getCurrentStatus()) {
             case OUTGOING -> fill = "'VALIDATED'";
             case VALIDATED -> fill = "'DELIVERED'";

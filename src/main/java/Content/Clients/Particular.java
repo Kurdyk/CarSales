@@ -17,6 +17,6 @@ public class Particular extends Client {
 
     @Override
     public String toString() {
-        return "\"Particular\" : " + "\""+ this.name+"\"";
+        return "Particular : " + this.name;
     }
 }
