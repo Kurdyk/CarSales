@@ -5,8 +5,8 @@ import Content.Vehicles.Vehicle;
 
 public class Order {
 
-    private Client client;
-    private Vehicle vehicle;
+    private final Client client;
+    private final Vehicle vehicle;
     private boolean payed;
     public enum status {
         OUTGOING,
@@ -81,7 +81,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Client" + this.client.toString() + " ordered " + this.vehicle.toString() +
+        return "Client : " + this.client.toString() + " ordered " + this.vehicle.toString() +
                 ", status: " + currentStatus.toString() + " payed: " + this.payed;
     }
 }
