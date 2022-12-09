@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * The type Vehicles app.
+ */
 public class VehiclesApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {

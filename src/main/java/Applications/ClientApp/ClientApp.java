@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * The type Client app.
+ */
 public class ClientApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {

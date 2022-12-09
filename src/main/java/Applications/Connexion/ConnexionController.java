@@ -16,6 +16,9 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * The type Connexion controller.
+ */
 public class ConnexionController {
 
     @FXML
@@ -29,6 +32,9 @@ public class ConnexionController {
     @FXML
     private PasswordField passwordField;
 
+    /**
+     * On connexion button click.
+     */
     @FXML
     protected void onConnexionButtonClick() {
         String id = idField.getText();
@@ -68,6 +74,11 @@ public class ConnexionController {
         stage.show();
     }
 
+    /**
+     * On ok button click.
+     *
+     * @param event the event
+     */
     @FXML
     protected void onOKButtonClick(ActionEvent event) {
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
