@@ -30,6 +30,9 @@ import java.util.Date;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+/**
+ * The type Client controller.
+ */
 public class ClientController implements Initializable {
 
     /// Main client view

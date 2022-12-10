@@ -24,10 +24,18 @@ import java.util.ResourceBundle;
 import java.awt.Desktop;
 
 
+/**
+ * The type Order history controller.
+ */
 public class OrderHistoryController implements Initializable {
 
     private Client client;
 
+    /**
+     * Instantiates a new Order history controller.
+     *
+     * @param client the client
+     */
     public OrderHistoryController(Client client) {
         this.client = client;
     }

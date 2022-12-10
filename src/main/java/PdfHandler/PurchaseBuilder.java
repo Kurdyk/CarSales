@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Purchase builder.
+ */
 public class PurchaseBuilder implements PdfBuilder {
     private String path;
     private Font titleFont;
@@ -69,6 +72,11 @@ public class PurchaseBuilder implements PdfBuilder {
         }
     }
 
+    /**
+     * Make map vehicle map.
+     *
+     * @return the map
+     */
     public Map makeMapVehicle() {
         Map l = new HashMap();
         if ((order.getVehicle()!=null) && (order.getClient()!=null)) {
@@ -86,7 +94,12 @@ public class PurchaseBuilder implements PdfBuilder {
         return l;
     }
 
-        public Map makeMapDelivery() {
+    /**
+     * Make map delivery map.
+     *
+     * @return the map
+     */
+    public Map makeMapDelivery() {
         Map l = new HashMap();
             if (order.getVehicle() == null) {
                 l.put("Price","");
@@ -114,6 +127,11 @@ public class PurchaseBuilder implements PdfBuilder {
         }
     }
 
+    /**
+     * Make map client map.
+     *
+     * @return the map
+     */
     public Map makeMapClient() {
         Map l = new HashMap();
         if ((order.getVehicle()!= null) && (order.getClient()!=null)) {

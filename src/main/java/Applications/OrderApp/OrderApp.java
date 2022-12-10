@@ -6,10 +6,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * The type Order app.
+ */
 public class OrderApp extends Application {
 
+    /**
+     * The Vehicle to sale.
+     */
     protected Vehicle vehicleToSale;
 
+    /**
+     * Instantiates a new Order app.
+     *
+     * @param vehicleToSale the vehicle to sale
+     */
     public OrderApp(Vehicle vehicleToSale) {
         this.vehicleToSale = vehicleToSale;
     }

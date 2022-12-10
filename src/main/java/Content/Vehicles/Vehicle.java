@@ -8,26 +8,51 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * The type Vehicle.
+ */
 public class Vehicle {
 
     private static long idClass = 0;
 
+    /**
+     * The Brand.
+     */
     protected final String brand;
+    /**
+     * The Licence plate.
+     */
     protected final String licencePlate;
+    /**
+     * The Value.
+     */
     protected final long value;
+    /**
+     * The Date.
+     */
     protected final Date date; // Since when is the vehicle available for sale
+    /**
+     * The Origin country.
+     */
     protected final String originCountry;
+    /**
+     * The Model.
+     */
     protected final String model;
+    /**
+     * The Id.
+     */
     protected final long id;
 
     /**
      * A constructor made to create a vehicle and import it in the database
-     * @param brand the brand of the vehicle
-     * @param licencePlate the licence plate of the vehicle
-     * @param value the original value of the vehicle
-     * @param date the date when the vehicle is up for sale (used to devaluate it if needed)
+     *
+     * @param brand         the brand of the vehicle
+     * @param licencePlate  the licence plate of the vehicle
+     * @param value         the original value of the vehicle
+     * @param date          the date when the vehicle is up for sale (used to devaluate it if needed)
      * @param originCountry the country where the car is stored
-     * @param model the model of the vehicle
+     * @param model         the model of the vehicle
      */
     public Vehicle(String brand, String licencePlate, long value, Date date, String originCountry, String model) {
         this.brand = brand;
@@ -56,13 +81,14 @@ public class Vehicle {
 
     /**
      * A constructor made to create a Vehicle object from the database
-     * @param brand the brand of the vehicle
-     * @param licencePlate the licence plate of the vehicle
-     * @param value the original value of the vehicle
-     * @param date the date when the vehicle is up for sale (used to devaluate it if needed)
+     *
+     * @param brand         the brand of the vehicle
+     * @param licencePlate  the licence plate of the vehicle
+     * @param value         the original value of the vehicle
+     * @param date          the date when the vehicle is up for sale (used to devaluate it if needed)
      * @param originCountry the country where the car is stored
-     * @param model the model of the vehicle
-     * @param id the id in the database of the vehicle
+     * @param model         the model of the vehicle
+     * @param id            the id in the database of the vehicle
      */
     public Vehicle(String brand, String licencePlate, long value, Date date, String originCountry, String model, long id) {
         this.brand = brand;
@@ -87,6 +113,11 @@ public class Vehicle {
                 '}';
     }
 
+    /**
+     * Gets discount value.
+     *
+     * @return the discount value
+     */
     public long getDiscountValue() {
         Date currentDate = new Date();
         long yearDiff = currentDate.getYear() - this.date.getYear();
@@ -94,6 +125,11 @@ public class Vehicle {
         return Math.max(this.value / 2, this.value - (long) (this.value * (2 * monthDiff/ 100.0)));
     }
 
+    /**
+     * To sql format string.
+     *
+     * @return the string
+     */
     public String toSQLFormat() {
         java.sql.Date sqlDate = new java.sql.Date(this.date.getTime());
         String dateForInsert = "STR_TO_DATE('" + sqlDate + "','%Y-%m-%d')";
@@ -101,31 +137,66 @@ public class Vehicle {
                 + "', '" + this.getOriginCountry() + "', '" + this.model + "'";
     }
 
+    /**
+     * Gets brand.
+     *
+     * @return the brand
+     */
     public String getBrand() {
         return brand;
     }
 
+    /**
+     * Gets licence plate.
+     *
+     * @return the licence plate
+     */
     public String getLicencePlate() {
         return licencePlate;
     }
 
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
     public long getValue() {
         return value;
     }
 
+    /**
+     * Gets date.
+     *
+     * @return the date
+     */
     public Date getDate() {
         return date;
     }
 
+    /**
+     * Gets origin country.
+     *
+     * @return the origin country
+     */
     public String getOriginCountry() {
         return originCountry;
     }
 
+    /**
+     * Gets model.
+     *
+     * @return the model
+     */
     public String getModel() {
         System.out.println("model = " + model);
         return model;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public long getId() {
         return id;
     }

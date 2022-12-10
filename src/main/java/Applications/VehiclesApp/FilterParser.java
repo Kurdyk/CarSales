@@ -9,16 +9,30 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ * The type Filter parser.
+ */
 public class FilterParser {
 
     private final String prompt;
     private final ArrayList<Vehicle> toFilter;
 
+    /**
+     * Instantiates a new Filter parser.
+     *
+     * @param prompt   the prompt
+     * @param toFilter the to filter
+     */
     protected FilterParser(String prompt, ArrayList<Vehicle> toFilter) {
         this.prompt = prompt;
         this.toFilter = toFilter;
     }
 
+    /**
+     * Filter array list.
+     *
+     * @return the array list
+     */
     protected ArrayList<Vehicle> filter() {
 
         if (this.prompt.isEmpty()) {
@@ -137,6 +151,11 @@ public class FilterParser {
     private class Literal extends LogicalObject {
         private String expr;
 
+        /**
+         * Instantiates a new Literal.
+         *
+         * @param expr the expr
+         */
         public Literal(String expr) {
             this.expr = expr;
         }
@@ -151,11 +170,22 @@ public class FilterParser {
         private final ArrayList<LogicalObject> logicalObjects;
         private final String type;    // AND or OR
 
+        /**
+         * Instantiates a new Clause.
+         *
+         * @param logicalObjects the logical objects
+         * @param type           the type
+         */
         public Clause(ArrayList<LogicalObject> logicalObjects, String type) {
             this.logicalObjects = logicalObjects;
             this.type = type;
         }
 
+        /**
+         * Add.
+         *
+         * @param logicalObject the logical object
+         */
         public void add(LogicalObject logicalObject) {
             this.logicalObjects.add(logicalObject);
         }
