@@ -26,7 +26,6 @@ public class CertificateBuilder implements PdfBuilder {
     private Order order;
     private PdfPTable vehicleTable;
     private PdfPTable applicantTable;
-    //TODO: add Paragraph object as an attribute?
 
     @Override
     public void setTitle(String title, Font.FontFamily font, BaseColor color) {
@@ -62,15 +61,6 @@ public class CertificateBuilder implements PdfBuilder {
         }
     }
 
-    @Override
-    public void setSectionBis(Order order) {
-        this.order=order;
-        subtitleFont = new Font(Font.FontFamily.HELVETICA,12,Font.BOLD,BaseColor.WHITE);
-        Chunk tmp = new Chunk("VÉHICULE",subtitleFont);
-        tmp.setBackground(new BaseColor(0,55,136));
-        Paragraph v = new Paragraph();
-        v.add(tmp);
-    }
 
     @Override
     public void setClientSection(Order order) {
@@ -129,40 +119,8 @@ public class CertificateBuilder implements PdfBuilder {
     }
 
 
-    @Override
-    public void setSection(Order order, String title,int columns) {
-        this.order=order;
-        subtitleFont = new Font(Font.FontFamily.HELVETICA,12,Font.BOLD,BaseColor.WHITE);
-        Chunk tmp = new Chunk(title,subtitleFont);
-        tmp.setBackground(new BaseColor(0,55,136));
-        Paragraph v = new Paragraph();
-        v.add(tmp);
-
-        PdfPTable table = new PdfPTable(columns);
-        Map line=null; //= makeMapVehicle();
-        addLines(vehicleTable,line,columns);
-        v.add(vehicleTable);
-        try {
-            document.add(v);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    public Map StringToMap() {
-        //todo: add json lib
-
-        return null;
-    }
-
     public Map makeMapVehicle() {
         Map l = new HashMap();
-        //TODO: faire d'après le json
-        /*JSONObject orderjson = new JSONObject(order.toString());
-        String cli = orderjson.getString("client");
-        */
         if ((order.getVehicle()!=null) && (order.getClient()!=null)) {
             l.put("License Plate",order.getVehicle().getLicencePlate());
             l.put("Purchase date","../../..");
@@ -183,48 +141,17 @@ public class CertificateBuilder implements PdfBuilder {
         if ((order.getVehicle()!= null) && (order.getClient()!=null)) {
             l.put("Name",order.getClient().getName());
             l.put("Adress",order.getClient().getAddress());
-            l.put("SIRET","");
+            if (order.getClient() instanceof Company) {
+                l.put("SIRET",((Company) order.getClient()).getSiret());
+            } else {
+                l.put("SIRET","");
+            }
         } else {
             l.put("Name","");
             l.put("Adress","");
             l.put("SIRET","");
         }
-        //TODO: ajouter siret si company
         return l;
-    }
-       /* public void addLines(PdfPTable table,Map<String,String> line, int columns) {
-        int i=0;
-        int k=0;
-        ArrayList tmp=new ArrayList<>();
-           for (String k1 : line.keySet()) {
-               System.out.println("k1:"+k1);
-               System.out.println("i:"+i);
-               PdfPCell c1 = new PdfPCell(new Phrase(Font.BOLD, k1));
-               System.out.println("tmp.add"+line.get(k1));
-               tmp.add(line.get(k1));
-               c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-               table.addCell(c1);
-               i++;
-               if (i%columns==0 && i!=0) {
-                   tmp.forEach(v->table.addCell((String)v));
-                   tmp.clear();
-               }
-           }
-    }*/
-
-
-
-
-    @Override
-    public void setSubTitle(String subtitle, Font.FontFamily font, int color) {
-
-    }
-
-
-
-    @Override
-    public void setSections(ArrayList sections) {
-
     }
 
 

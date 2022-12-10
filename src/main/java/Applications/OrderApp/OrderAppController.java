@@ -85,8 +85,6 @@ public class OrderAppController implements Initializable {
 
     @FXML
     private void onConfirmButtonClick() {
-        // TODO : generate pdf
-        // TODO : test
         Client buyer = this.clientSelector.getSelectionModel().getSelectedItem();
         if (buyer==null) return;
         Order order = new Order(buyer, this.toSell, this.paidCheck.isSelected());
@@ -105,7 +103,6 @@ public class OrderAppController implements Initializable {
             director.constructRegistrationCertificate(regBuilder,"generatedPdfs/RegistrationCertificate"+order.getClient().getId()+".pdf");
             director.constructTransferCertificate(transfBuilder, "generatedPdfs/TransferCertificate"+order.getClient().getId()+".pdf");
             director.constructPurchaseOrder(purchBuilder,"generatedPdfs/PurchaseOrder"+order.getVehicle().getId()+".pdf");
-            /*Certificate certif = */
             regBuilder.build();
             transfBuilder.build();
             purchBuilder.build();

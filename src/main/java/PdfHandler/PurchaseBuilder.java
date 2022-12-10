@@ -1,5 +1,6 @@
 package PdfHandler;
 
+import Content.Clients.Company;
 import Content.Order;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -34,25 +35,7 @@ public class PurchaseBuilder implements PdfBuilder {
         }
     }
 
-    @Override
-    public void setSubTitle(String subtitle, Font.FontFamily font, int color) {
-        titleFont = new Font(Font.FontFamily.HELVETICA,12,Font.BOLD,BaseColor.WHITE);
-        this.title = subtitle;
-        Chunk tmp = new Chunk(title,titleFont);
-        tmp.setBackground(new BaseColor(3,102,177));
-        Paragraph v = new Paragraph();
-        v.add(tmp);
-        try {
-            document.add(v);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-    }
 
-    @Override
-    public void setSections(ArrayList sections) {
-
-    }
 
     @Override
     public void setPath(String path) {
@@ -88,53 +71,34 @@ public class PurchaseBuilder implements PdfBuilder {
 
     public Map makeMapVehicle() {
         Map l = new HashMap();
-        //TODO: faire d'après le json
-        /*JSONObject orderjson = new JSONObject(order.toString());
-        String cli = orderjson.getString("client");
-        */
-        //todo: verif nullpointer
-        l.put("License Plate",order.getVehicle().getLicencePlate());
-        l.put("Purchase date","../../..");
-        l.put("Country of origin",order.getVehicle().getOriginCountry());
-        l.put("Brand",order.getVehicle().getBrand());
-        l.put("Model",order.getVehicle().getModel());
-        l.put("Dominant color","??");
+        if ((order.getVehicle()!=null) && (order.getClient()!=null)) {
+            l.put("License Plate",order.getVehicle().getLicencePlate());
+            l.put("Purchase date","../../..");
+            l.put("Country of origin",order.getVehicle().getOriginCountry());
+            l.put("Brand",order.getVehicle().getBrand());
+            l.put("Model",order.getVehicle().getModel());
+            l.put("Dominant color","??");
+        } else {
+            l.put("License Plate","");
+            l.put("Adress","");
+            l.put("SIRET","");
+        }
         return l;
     }
 
         public Map makeMapDelivery() {
         Map l = new HashMap();
-
-        //todo: verif nullpointer
-        l.put("Price",order.getVehicle().getLicencePlate());
-        l.put("Place of delivery ",order.getClient().getAddress());
+            if (order.getVehicle() == null) {
+                l.put("Price","");
+                l.put("Place of delivery ","");
+            } else {
+                l.put("Price",order.getVehicle().getLicencePlate());
+                l.put("Place of delivery ",order.getClient().getAddress());
+            }
         return l;
     }
 
-    @Override
-    public void setSection(Order order, String title, int columns) {
-        this.order=order;
-        subtitleFont = new Font(Font.FontFamily.HELVETICA,12,Font.BOLD,BaseColor.WHITE);
-        Chunk tmp = new Chunk("DELIVERY AND PAYMENT",subtitleFont);
-        tmp.setBackground(new BaseColor(3,102,177));
-        Paragraph v = new Paragraph();
-        v.add(tmp);
 
-        PdfPTable table = new PdfPTable(2);
-        Map line = makeMapDelivery();
-        addLines(table,line,2);
-        v.add(table);
-        try {
-            document.add(v);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void setSectionBis(Order order) {
-
-    }
 
     @Override
     public void setClientSection(Order order) {
@@ -155,14 +119,16 @@ public class PurchaseBuilder implements PdfBuilder {
         if ((order.getVehicle()!= null) && (order.getClient()!=null)) {
             l.put("Name",order.getClient().getName());
             l.put("Adress",order.getClient().getAddress());
-            l.put("SIRET","");
+            if (order.getClient() instanceof Company) {
+                l.put("SIRET",((Company) order.getClient()).getSiret());
+            } else {
+                l.put("SIRET","");
+            }
         } else {
             l.put("Name","");
             l.put("Adress","");
             l.put("SIRET","");
         }
-
-        //TODO: ajouter siret si company
         return l;
     }
 
@@ -200,10 +166,6 @@ public class PurchaseBuilder implements PdfBuilder {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-    }
-
-    public Map makePurchaseMap() {
-        return null;
     }
 
     public Certificate build() throws FileNotFoundException, DocumentException {

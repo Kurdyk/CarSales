@@ -14,11 +14,15 @@ import javafx.scene.control.ListView;
 import com.itextpdf.text.Document;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.awt.Desktop;
+
 
 public class OrderHistoryController implements Initializable {
 
@@ -75,6 +79,23 @@ public class OrderHistoryController implements Initializable {
         }
         this.updateList();
     }
+
+    @FXML
+    private void onSeeDocumentsButtonClick() throws IOException {
+        File file = new File("generatedPdfs/RegistrationCertificate"+client.getId()+".pdf");
+        //first check if Desktop is supported by Platform or not
+        if(!Desktop.isDesktopSupported()){
+            System.out.println("Desktop is not supported");
+            return;
+        }
+        Desktop desktop = Desktop.getDesktop();
+        if(file.exists()) desktop.open(file);
+        file = new File("generatedPdfs/TransferCertificate"+client.getId()+".pdf");
+        if(file.exists()) desktop.open(file);
+        file = new File("generatedPdfs/PurchaseOrder"+client.getId()+".pdf");
+        if(file.exists()) desktop.open(file);
+    }
+
 
     private void updateList() {
         this.orderListView.getItems().clear();

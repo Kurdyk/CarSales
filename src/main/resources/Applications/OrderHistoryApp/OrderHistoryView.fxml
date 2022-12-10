@@ -12,7 +12,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#onIncrementStatusButtonClick" text="Increment status" />
             <Button mnemonicParsing="false" onAction="#onSetToPayedButtonClick" text="Set to payed" />
-            <Button mnemonicParsing="false" text="See documents" />
+            <Button mnemonicParsing="false" onAction="#onSeeDocumentsButtonClick" text="See documents" />
          </children>
       </HBox>
    </children>

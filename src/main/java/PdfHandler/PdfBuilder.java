@@ -13,19 +13,11 @@ import java.util.Map;
 public interface PdfBuilder {
     void setTitle(String s, Font.FontFamily font, BaseColor color);
 
-    void setSubTitle(String subtitle, Font.FontFamily font, int color);
-
-    void setSections(ArrayList sections);
-
     void setPath(String path);
 
     void setDocument() throws FileNotFoundException, DocumentException;
 
     void setVehicleSection(Order order);
-
-    void setSection(Order order, String title, int columns);
-
-    void setSectionBis(Order order);
 
     void setClientSection(Order order);
 
@@ -35,8 +27,6 @@ public interface PdfBuilder {
 
     default void addLines(PdfPTable table, Map<String, String> line, int columns) {
         int i = 0;
-        int k = 0;
-        //todo: change font
         ArrayList tmp = new ArrayList<>();
         for (String k1 : line.keySet()) {
             PdfPCell c1 = new PdfPCell(new Phrase(Font.BOLD, k1));
@@ -50,4 +40,6 @@ public interface PdfBuilder {
             }
         }
     }
+
+
 }

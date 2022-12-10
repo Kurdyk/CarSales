@@ -18,7 +18,6 @@ public class Director {
         this.order=order;
     }
     public void constructRegistrationCertificate(PdfBuilder builder,String path) throws DocumentException, FileNotFoundException {
-        //TODO: mieux faire (ordre)
         builder.setPath(path);
         builder.setDocument();
         builder.setTitle("CERTIFICAT D'IMMATRICULATION DE VÉHICULE", Font.FontFamily.HELVETICA, new BaseColor(0,55,136));
