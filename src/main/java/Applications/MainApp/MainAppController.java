@@ -6,6 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * The type Main app controller.
+ */
 public class MainAppController {
 
     @FXML

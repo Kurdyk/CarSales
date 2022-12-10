@@ -9,10 +9,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * The type Order history app.
+ */
 public class OrderHistoryApp extends Application {
 
     private Client client;
 
+    /**
+     * Instantiates a new Order history app.
+     *
+     * @param client the client
+     */
     public OrderHistoryApp(Client client) {
         this.client = client;
     }

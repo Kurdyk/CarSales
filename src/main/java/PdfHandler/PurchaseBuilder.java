@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Purchase builder.
+ */
 public class PurchaseBuilder implements PdfBuilder {
     private String path;
     private Font titleFont;
@@ -86,6 +89,11 @@ public class PurchaseBuilder implements PdfBuilder {
         }
     }
 
+    /**
+     * Make map vehicle map.
+     *
+     * @return the map
+     */
     public Map makeMapVehicle() {
         Map l = new HashMap();
         //TODO: faire d'après le json
@@ -102,7 +110,12 @@ public class PurchaseBuilder implements PdfBuilder {
         return l;
     }
 
-        public Map makeMapDelivery() {
+    /**
+     * Make map delivery map.
+     *
+     * @return the map
+     */
+    public Map makeMapDelivery() {
         Map l = new HashMap();
 
         //todo: verif nullpointer
@@ -150,6 +163,11 @@ public class PurchaseBuilder implements PdfBuilder {
         }
     }
 
+    /**
+     * Make map client map.
+     *
+     * @return the map
+     */
     public Map makeMapClient() {
         Map l = new HashMap();
         if ((order.getVehicle()!= null) && (order.getClient()!=null)) {
@@ -202,10 +220,22 @@ public class PurchaseBuilder implements PdfBuilder {
         }
     }
 
+    /**
+     * Make purchase map map.
+     *
+     * @return the map
+     */
     public Map makePurchaseMap() {
         return null;
     }
 
+    /**
+     * Build certificate.
+     *
+     * @return the certificate
+     * @throws FileNotFoundException the file not found exception
+     * @throws DocumentException     the document exception
+     */
     public Certificate build() throws FileNotFoundException, DocumentException {
         document.close();
         return new Certificate(order,path,titleFont, subtitleFont,document,title);
