@@ -17,9 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/**
- * The type Certificate builder.
- */
 public class CertificateBuilder implements PdfBuilder {
     private String path;
     private Font titleFont;
@@ -139,11 +136,6 @@ public class CertificateBuilder implements PdfBuilder {
         return l;
     }
 
-    /**
-     * Make map client map.
-     *
-     * @return the map
-     */
     public Map makeMapClient() {
         Map l = new HashMap();
         if ((order.getVehicle()!= null) && (order.getClient()!=null)) {
@@ -179,13 +171,6 @@ public class CertificateBuilder implements PdfBuilder {
 
     }
 
-    /**
-     * Build certificate.
-     *
-     * @return the certificate
-     * @throws FileNotFoundException the file not found exception
-     * @throws DocumentException     the document exception
-     */
     public Certificate build() throws FileNotFoundException, DocumentException {
         document.close();
         return new Certificate(order,path,titleFont, subtitleFont,document,title);
