@@ -89,19 +89,42 @@ public class OrderHistoryController implements Initializable {
     }
 
     @FXML
-    private void onSeeDocumentsButtonClick() throws IOException {
-        File file = new File("generatedPdfs/RegistrationCertificate"+client.getId()+".pdf");
+    private void onSeeDocumentsButtonClick() {
+        Order order = this.orderListView.getSelectionModel().getSelectedItem();
         //first check if Desktop is supported by Platform or not
         if(!Desktop.isDesktopSupported()){
             System.out.println("Desktop is not supported");
             return;
         }
         Desktop desktop = Desktop.getDesktop();
-        if(file.exists()) desktop.open(file);
-        file = new File("generatedPdfs/TransferCertificate"+client.getId()+".pdf");
-        if(file.exists()) desktop.open(file);
-        file = new File("generatedPdfs/PurchaseOrder"+client.getId()+".pdf");
-        if(file.exists()) desktop.open(file);
+        try {
+            new Thread(() -> {
+                try {
+                    File file = new File("generatedPdfs/RegistrationCertificate"+ order.getClient().getId() + "_" + order.getVehicle().getId()+".pdf");
+                    if (file.exists()) desktop.open(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            new Thread(() -> {
+                try {
+                    File file = new File("generatedPdfs/TransferCertificate" + order.getClient().getId() + "_" + order.getVehicle().getId() + ".pdf");
+                    if (file.exists()) desktop.open(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            new Thread(() -> {
+                try {
+                    File file = new File("generatedPdfs/PurchaseOrder" + order.getClient().getId() + "_" + order.getVehicle().getId() + ".pdf");
+                    if (file.exists()) desktop.open(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -108,9 +108,11 @@ public class OrderAppController implements Initializable {
         PurchaseBuilder purchBuilder = new PurchaseBuilder();
 
         try {
-            director.constructRegistrationCertificate(regBuilder,"generatedPdfs/RegistrationCertificate"+order.getClient().getId()+".pdf");
-            director.constructTransferCertificate(transfBuilder, "generatedPdfs/TransferCertificate"+order.getClient().getId()+".pdf");
-            director.constructPurchaseOrder(purchBuilder,"generatedPdfs/PurchaseOrder"+order.getVehicle().getId()+".pdf");
+            director.constructRegistrationCertificate(regBuilder,"generatedPdfs/RegistrationCertificate"+
+                    order.getClient().getId() + "_" + order.getVehicle().getId() +".pdf");
+            director.constructTransferCertificate(transfBuilder, "generatedPdfs/TransferCertificate"
+                    +order.getClient().getId() + "_" + order.getVehicle().getId()+".pdf");
+            director.constructPurchaseOrder(purchBuilder,"generatedPdfs/PurchaseOrder"+ order.getClient().getId() + "_" + order.getVehicle().getId()+".pdf");
             regBuilder.build();
             transfBuilder.build();
             purchBuilder.build();
