@@ -26,6 +26,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * The type Vehicles controller.
+ */
 public class VehiclesController implements Initializable {
 
     /// Main view

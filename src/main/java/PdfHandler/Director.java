@@ -11,12 +11,29 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+/**
+ * The type Director.
+ */
 public class Director {
     private Order order;
 
+    /**
+     * Instantiates a new Director.
+     *
+     * @param order the order
+     */
     public Director(Order order) {
         this.order=order;
     }
+
+    /**
+     * Construct registration certificate.
+     *
+     * @param builder the builder
+     * @param path    the path
+     * @throws DocumentException     the document exception
+     * @throws FileNotFoundException the file not found exception
+     */
     public void constructRegistrationCertificate(PdfBuilder builder,String path) throws DocumentException, FileNotFoundException {
         builder.setPath(path);
         builder.setDocument();
@@ -27,6 +44,14 @@ public class Director {
         builder.AdministrationFrame(order);
     }
 
+    /**
+     * Construct transfer certificate.
+     *
+     * @param builder the builder
+     * @param path    the path
+     * @throws DocumentException     the document exception
+     * @throws FileNotFoundException the file not found exception
+     */
     public void constructTransferCertificate(PdfBuilder builder, String path) throws DocumentException, FileNotFoundException  {
         builder.setPath(path);
         builder.setDocument();
@@ -37,6 +62,14 @@ public class Director {
         builder.AdministrationFrame(order);
     }
 
+    /**
+     * Construct purchase order.
+     *
+     * @param builder the builder
+     * @param path    the path
+     * @throws DocumentException     the document exception
+     * @throws FileNotFoundException the file not found exception
+     */
     public void constructPurchaseOrder(PdfBuilder builder, String path) throws DocumentException, FileNotFoundException  {
         builder.setPath(path);
         builder.setDocument();
