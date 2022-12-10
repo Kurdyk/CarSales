@@ -9,8 +9,16 @@ import Content.Vehicles.Scooter;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * The type Db tester.
+ */
 public class DBTester {
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         DBConnector dbConnector = null;
         DBConnector.setUSER("louis");

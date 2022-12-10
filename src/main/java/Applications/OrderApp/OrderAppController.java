@@ -39,6 +39,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * The type Order app controller.
+ */
 public class OrderAppController implements Initializable {
 
     private Vehicle toSell;
@@ -66,6 +69,11 @@ public class OrderAppController implements Initializable {
     @FXML
     private ChoiceBox<Client> clientSelector;
 
+    /**
+     * Instantiates a new Order app controller.
+     *
+     * @param toSell the to sell
+     */
     protected OrderAppController(Vehicle toSell) {
         this.toSell = toSell;
     }

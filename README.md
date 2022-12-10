@@ -10,7 +10,7 @@ This **NEEDS** an up-to-date version of maven. It will create a `Project-1.0-SNA
 
 # How to execute
 Two options:
-- make a jar and execute: `java --module-path Mydir/lib/ --add-modules javafx.controls,javafx.fxml -jar target/Project-1.0-SNAPSHOT.jar`
+- make a jar and execute: `java --module-path Dependencies/lib/ --add-modules javafx.controls,javafx.fxml -jar target/Project-1.0-SNAPSHOT.jar`
 - execute: `mvn clean javafx:run`
 
 ## Authors

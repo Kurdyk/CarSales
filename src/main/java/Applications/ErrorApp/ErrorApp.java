@@ -6,10 +6,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * The type Error app.
+ */
 public class ErrorApp extends Application {
 
     private final String errorOrigin;
 
+    /**
+     * Instantiates a new Error app.
+     *
+     * @param errorOrigin the error origin
+     */
     public ErrorApp(String errorOrigin) {
         super();
         this.errorOrigin = errorOrigin;

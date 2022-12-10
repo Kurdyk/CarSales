@@ -16,6 +16,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * The type Connexion application.
+ */
 public class ConnexionApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -26,6 +29,13 @@ public class ConnexionApplication extends Application {
         stage.show();
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws DocumentException     the document exception
+     * @throws FileNotFoundException the file not found exception
+     */
     public static void main(String[] args) throws DocumentException, FileNotFoundException {
         launch();
     }
