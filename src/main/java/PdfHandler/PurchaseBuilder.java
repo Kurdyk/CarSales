@@ -1,5 +1,6 @@
 package PdfHandler;
 
+import Content.Clients.Company;
 import Content.Order;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -11,9 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * The type Purchase builder.
- */
 public class PurchaseBuilder implements PdfBuilder {
     private String path;
     private Font titleFont;
@@ -37,25 +35,7 @@ public class PurchaseBuilder implements PdfBuilder {
         }
     }
 
-    @Override
-    public void setSubTitle(String subtitle, Font.FontFamily font, int color) {
-        titleFont = new Font(Font.FontFamily.HELVETICA,12,Font.BOLD,BaseColor.WHITE);
-        this.title = subtitle;
-        Chunk tmp = new Chunk(title,titleFont);
-        tmp.setBackground(new BaseColor(3,102,177));
-        Paragraph v = new Paragraph();
-        v.add(tmp);
-        try {
-            document.add(v);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-    }
 
-    @Override
-    public void setSections(ArrayList sections) {
-
-    }
 
     @Override
     public void setPath(String path) {
@@ -89,65 +69,36 @@ public class PurchaseBuilder implements PdfBuilder {
         }
     }
 
-    /**
-     * Make map vehicle map.
-     *
-     * @return the map
-     */
     public Map makeMapVehicle() {
         Map l = new HashMap();
-        //TODO: faire d'après le json
-        /*JSONObject orderjson = new JSONObject(order.toString());
-        String cli = orderjson.getString("client");
-        */
-        //todo: verif nullpointer
-        l.put("License Plate",order.getVehicle().getLicencePlate());
-        l.put("Purchase date","../../..");
-        l.put("Country of origin",order.getVehicle().getOriginCountry());
-        l.put("Brand",order.getVehicle().getBrand());
-        l.put("Model",order.getVehicle().getModel());
-        l.put("Dominant color","??");
-        return l;
-    }
-
-    /**
-     * Make map delivery map.
-     *
-     * @return the map
-     */
-    public Map makeMapDelivery() {
-        Map l = new HashMap();
-
-        //todo: verif nullpointer
-        l.put("Price",order.getVehicle().getLicencePlate());
-        l.put("Place of delivery ",order.getClient().getAddress());
-        return l;
-    }
-
-    @Override
-    public void setSection(Order order, String title, int columns) {
-        this.order=order;
-        subtitleFont = new Font(Font.FontFamily.HELVETICA,12,Font.BOLD,BaseColor.WHITE);
-        Chunk tmp = new Chunk("DELIVERY AND PAYMENT",subtitleFont);
-        tmp.setBackground(new BaseColor(3,102,177));
-        Paragraph v = new Paragraph();
-        v.add(tmp);
-
-        PdfPTable table = new PdfPTable(2);
-        Map line = makeMapDelivery();
-        addLines(table,line,2);
-        v.add(table);
-        try {
-            document.add(v);
-        } catch (DocumentException e) {
-            e.printStackTrace();
+        if ((order.getVehicle()!=null) && (order.getClient()!=null)) {
+            l.put("License Plate",order.getVehicle().getLicencePlate());
+            l.put("Purchase date","../../..");
+            l.put("Country of origin",order.getVehicle().getOriginCountry());
+            l.put("Brand",order.getVehicle().getBrand());
+            l.put("Model",order.getVehicle().getModel());
+            l.put("Dominant color","??");
+        } else {
+            l.put("License Plate","");
+            l.put("Adress","");
+            l.put("SIRET","");
         }
+        return l;
     }
 
-    @Override
-    public void setSectionBis(Order order) {
-
+        public Map makeMapDelivery() {
+        Map l = new HashMap();
+            if (order.getVehicle() == null) {
+                l.put("Price","");
+                l.put("Place of delivery ","");
+            } else {
+                l.put("Price",order.getVehicle().getLicencePlate());
+                l.put("Place of delivery ",order.getClient().getAddress());
+            }
+        return l;
     }
+
+
 
     @Override
     public void setClientSection(Order order) {
@@ -163,24 +114,21 @@ public class PurchaseBuilder implements PdfBuilder {
         }
     }
 
-    /**
-     * Make map client map.
-     *
-     * @return the map
-     */
     public Map makeMapClient() {
         Map l = new HashMap();
         if ((order.getVehicle()!= null) && (order.getClient()!=null)) {
             l.put("Name",order.getClient().getName());
             l.put("Adress",order.getClient().getAddress());
-            l.put("SIRET","");
+            if (order.getClient() instanceof Company) {
+                l.put("SIRET",((Company) order.getClient()).getSiret());
+            } else {
+                l.put("SIRET","");
+            }
         } else {
             l.put("Name","");
             l.put("Adress","");
             l.put("SIRET","");
         }
-
-        //TODO: ajouter siret si company
         return l;
     }
 
@@ -220,22 +168,6 @@ public class PurchaseBuilder implements PdfBuilder {
         }
     }
 
-    /**
-     * Make purchase map map.
-     *
-     * @return the map
-     */
-    public Map makePurchaseMap() {
-        return null;
-    }
-
-    /**
-     * Build certificate.
-     *
-     * @return the certificate
-     * @throws FileNotFoundException the file not found exception
-     * @throws DocumentException     the document exception
-     */
     public Certificate build() throws FileNotFoundException, DocumentException {
         document.close();
         return new Certificate(order,path,titleFont, subtitleFont,document,title);

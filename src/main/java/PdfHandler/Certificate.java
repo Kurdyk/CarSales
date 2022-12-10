@@ -36,13 +36,6 @@ public class Certificate extends PdfDocument {
             subtitleFont=sf;
             document=doc;
             title=t;
-            /*document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(path));
-            document.open();
-            Paragraph ptitle = new Paragraph();
-            ptitle.add(new Paragraph(title,titleFont));
-            document.add(ptitle);
-            document.close();*/
         } catch (Exception e) {
             e.printStackTrace();
         }

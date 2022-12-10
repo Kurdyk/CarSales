@@ -5,6 +5,7 @@ module Applications.project {
     requires java.sql;
     requires mysql.connector.java;
     requires org.json;
+    requires java.desktop;
 
     opens Applications.VehiclesApp to javafx.fxml;
     opens Applications.ClientApp to javafx.fxml;

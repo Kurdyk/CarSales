@@ -93,8 +93,6 @@ public class OrderAppController implements Initializable {
 
     @FXML
     private void onConfirmButtonClick() {
-        // TODO : generate pdf
-        // TODO : test
         Client buyer = this.clientSelector.getSelectionModel().getSelectedItem();
         if (buyer==null) return;
         Order order = new Order(buyer, this.toSell, this.paidCheck.isSelected());
@@ -110,10 +108,11 @@ public class OrderAppController implements Initializable {
         PurchaseBuilder purchBuilder = new PurchaseBuilder();
 
         try {
-            director.constructRegistrationCertificate(regBuilder,"generatedPdfs/RegistrationCertificate"+order.getClient().getId());
-            director.constructTransferCertificate(transfBuilder, "generatedPdfs/TransferCertificate"+order.getClient().getId());
-            director.constructPurchaseOrder(purchBuilder,"generatedPdfs/PurchaseOrder"+order.getVehicle().getId());
-            /*Certificate certif = */
+            director.constructRegistrationCertificate(regBuilder,"generatedPdfs/RegistrationCertificate"+
+                    order.getClient().getId() + "_" + order.getVehicle().getId() +".pdf");
+            director.constructTransferCertificate(transfBuilder, "generatedPdfs/TransferCertificate"
+                    +order.getClient().getId() + "_" + order.getVehicle().getId()+".pdf");
+            director.constructPurchaseOrder(purchBuilder,"generatedPdfs/PurchaseOrder"+ order.getClient().getId() + "_" + order.getVehicle().getId()+".pdf");
             regBuilder.build();
             transfBuilder.build();
             purchBuilder.build();
@@ -209,6 +208,8 @@ public class OrderAppController implements Initializable {
             this.clientSelector.getItems().add(client);
         }
     }
+
+
 
 
 }
