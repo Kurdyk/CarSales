@@ -102,9 +102,9 @@ public class OrderAppController implements Initializable {
         PurchaseBuilder purchBuilder = new PurchaseBuilder();
 
         try {
-            director.constructRegistrationCertificate(regBuilder,"generatedPdfs/RegistrationCertificate"+order.getClient().getId());
-            director.constructTransferCertificate(transfBuilder, "generatedPdfs/TransferCertificate"+order.getClient().getId());
-            director.constructPurchaseOrder(purchBuilder,"generatedPdfs/PurchaseOrder"+order.getVehicle().getId());
+            director.constructRegistrationCertificate(regBuilder,"generatedPdfs/RegistrationCertificate"+order.getClient().getId()+".pdf");
+            director.constructTransferCertificate(transfBuilder, "generatedPdfs/TransferCertificate"+order.getClient().getId()+".pdf");
+            director.constructPurchaseOrder(purchBuilder,"generatedPdfs/PurchaseOrder"+order.getVehicle().getId()+".pdf");
             /*Certificate certif = */
             regBuilder.build();
             transfBuilder.build();
@@ -201,6 +201,8 @@ public class OrderAppController implements Initializable {
             this.clientSelector.getItems().add(client);
         }
     }
+
+
 
 
 }
