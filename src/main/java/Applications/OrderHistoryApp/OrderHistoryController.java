@@ -91,6 +91,9 @@ public class OrderHistoryController implements Initializable {
     @FXML
     private void onSeeDocumentsButtonClick() {
         Order order = this.orderListView.getSelectionModel().getSelectedItem();
+        if (order == null) {
+            return;
+        }
         //first check if Desktop is supported by Platform or not
         if(!Desktop.isDesktopSupported()){
             System.out.println("Desktop is not supported");
